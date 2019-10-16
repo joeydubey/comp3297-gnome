@@ -41,7 +41,7 @@ End with an example of getting some data out of the system or using it for a lit
 
 When you start working on code, you don't want to disrupt the current system. We will be using git. 
 Each time you want to work on a feature or a task, you'll create a new branch. 
-Start by pulling all the current code from master `git pull` and then `git branch checkout sprint-number/description` to 
+Start by pulling all the current code from master `git pull` and then `git checkout -b sprint-number/description` to 
 create a new independant branch. You will now be on this new branch. Write all your code for this user story / individual
 task on this branch, adding code `git add .` to add all the changed files or `git add file-names` to add specific files,
 and making commits `git commit -m "descriptive commit message- what changes were made so we can track progress and rollback 
