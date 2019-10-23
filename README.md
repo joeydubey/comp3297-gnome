@@ -31,10 +31,13 @@ task on this branch, adding code `git add .` to add all the changed files or `gi
 and making commits `git commit -m "descriptive commit message- what changes were made so we can track progress and rollback 
 changes"` when necessary.
 
-When you are done with making changes, push all of your commits `git push origin branch-name`. You will see an option to 
-create a pull request- click the link. You will be brought to github where you can describe what changes were made, make sure
+When you are done with making changes, push all of your commits `git push origin branch-name`. 
+
+
+### Create Pull Requests
+On the home page of our github reposotory after you've pushed your changes on your development branch. Click the green button "compare and pull request". Here you can describe what changes were made, make sure
 all the tests pass, and assign specific developers to look over your code. Once another member approves your code, it will can
-be merged into the master branch. 
+be merged into the master branch via the "squash and merge" button.
 
 ## Running Django
 
@@ -49,10 +52,10 @@ python manage.py migrate
 ```
 
 
-### Writing tests
+## Writing tests
 WRITE THEM!!! UNIT TESTS PLEASE!! I WIL BE TEST HOUND
 
-## Running the tests
+### Running the tests
 
 Explain how to run the automated tests for this system
 
