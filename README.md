@@ -6,6 +6,8 @@ One Paragraph of project description goes here
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
+I suggest downloading a DB sqlite viewew if you are interested in lookin at and manipulating the DB. 
+
 
 ## Setting up Django
 
@@ -18,24 +20,6 @@ These instructions will get you a copy of the project up and running on your loc
 cd into your directory
 
 `pipenv install django` will install Django in your virtual environment
-
-## 
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Working on Code: Using Git
 
@@ -51,6 +35,19 @@ When you are done with making changes, push all of your commits `git push origin
 create a pull request- click the link. You will be brought to github where you can describe what changes were made, make sure
 all the tests pass, and assign specific developers to look over your code. Once another member approves your code, it will can
 be merged into the master branch. 
+
+## Running Django
+
+`python manage.py runserver` will launch the server where I have made some working pages!! http://127.0.0.1:8000/backtrack/projects will bring you to a page with a list of projects. You can use this to Debug and change your code based on the visual.
+
+
+## Database changes
+Feel free to make changes in Backtrack/Models.py, and then run to ensure your updates migrate throughout the project
+```
+python manage.py makemigrations backtrack
+python manage.py migrate
+```
+
 
 ### Writing tests
 WRITE THEM!!! UNIT TESTS PLEASE!! I WIL BE TEST HOUND
