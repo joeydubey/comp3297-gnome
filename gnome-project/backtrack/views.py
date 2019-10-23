@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
-from orders.models import Project, ProductBacklog, SprintBacklog
+from backtrack.models import Project, ProductBacklog, SprintBacklog
 
 # Create your views here.
 
