@@ -18,11 +18,12 @@ class ViewProjects(TemplateView):
 class ViewProject(TemplateView):
     template_name = "project.html"
 
-    def get_context_data(self, **kwargs):
-        project = self.kwargs['project']
-        context = super().get_context_data(**kwargs)
-        context['project'] = Project.objects.get(id=project)
-        return context
+    # def get_context_data(self, **kwargs):
+    #     console.log(**kwargs)
+    #     project = self.kwargs['project']
+    #     context = super().get_context_data(**kwargs)
+    #     context['project'] = Project.objects.get(id=project)
+    #     return context
 
 
 class ProjectsViewAll(ListView):
