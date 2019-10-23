@@ -28,6 +28,7 @@ class ProductBacklogItem(models.Model):
     description = models.CharField(max_length=500)
     pointEstimate = models.IntegerField()
     productBacklog = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
+    tasks = models.ForeignKey(Task, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
