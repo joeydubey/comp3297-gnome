@@ -2,7 +2,7 @@
 <ul>
 {% for project in project_list %}
 
-    <li>[{{ project.status }}] </li>
+    <li>[{{ project.name }}] </li>
     <li>
         <a href="{% url 'project' project.pk %}"> {{ project.name }}</a>
     </li>

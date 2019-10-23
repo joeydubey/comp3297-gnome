@@ -21,7 +21,7 @@ class ViewProject(TemplateView):
     def get_context_data(self, **kwargs):
         project = self.kwargs['project']
         context = super().get_context_data(**kwargs)
-        context['project'] = Project.objects.all(pk = project)
+        context['project'] = Project.objects.get(id=project)
         return context
 
 
