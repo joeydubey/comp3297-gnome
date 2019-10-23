@@ -3,7 +3,7 @@ from django.db import models
 
 class Project(models.Model):
     name = models.CharField(max_length=200)
-    status = models.CharField(max_length=200)
+    status = models.CharField(max_length=200, default='Not yet started')
 
     def __str__(self):
         return self.name
@@ -40,7 +40,7 @@ class Task(models.Model):
     estimatedEffortHours = models.TimeField()
     actualEffortHours = models.TimeField()
     status = models.CharField(max_length=50)
-    pbi = models.ForeignKey(ProductBacklogItem, on_delete=models.CASCADE)
+    pbi = models.ForeignKey(ProductBacklogItem, on_delete=models.CASCADE, default=None)
 
     def __str__(self):
         return self.name
