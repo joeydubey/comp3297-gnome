@@ -4,6 +4,8 @@ from django.views.generic.list import ListView
 from backtrack.models import Project, ProductBacklog, SprintBacklog
 import logging
 
+from django.views.generic.edit import CreateView
+
 # Create your views here.
 
 logging.basicConfig(level=logging.DEBUG)
@@ -45,9 +47,9 @@ class ProjectsViewAll(ListView):
     logging.debug('This will get logged')
 
 
+class CreateNewProjectView(CreateView):
+    template_name="project_form.html"
+    model=Project
+    fields=['name', 'status']
 
-def CreateNewProjectView(request):
-    return render(request, "create_new_project.html", {})
 
-def CreateNewProjectView2(request):
-    project = Project.objects.create(name="hey")
