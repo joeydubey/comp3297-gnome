@@ -57,7 +57,7 @@ WRITE THEM!!! UNIT TESTS PLEASE!! I WIL BE TEST HOUND
 
 ### Running the tests
 
-Explain how to run the automated tests for this system
+`python manage.py test` will run all of the tests in the test directory
 
 ### Break down into end to end tests
 
