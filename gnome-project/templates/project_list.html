@@ -1,6 +1,22 @@
-<h1>Showing all projects by</h1>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Project List </title>
+        <h1> DSG Projects </h1>
+    </head>
+    <body>
+        <button type="button" onclick=""> Create a New Project</button>
+        <p> Current Projects</p>
+            <ul> { % for project in project_list if current%} </ul>
+        <p> Completed Projects</p>
+            <ul> { % for project in project_list if completed%} </ul>
+
+    </body>
+</html>
+
+
 <!--<ul>-->
-<!--&lt;!&ndash;{% for project in project_list %}&ndash;&gt;-->
+<!--{% for project in project_list %}-->
 
     <!--<li>[{{ project.name }}] </li>-->
     <!--<li>-->
