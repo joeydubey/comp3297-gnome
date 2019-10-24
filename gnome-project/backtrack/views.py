@@ -34,3 +34,6 @@ class ProjectsViewAll(ListView):
     model = Project
 
     logging.debug('This will get logged')
+
+def CreateNewProjectView(request):
+    return render(request, "create_new_project.html", {})
