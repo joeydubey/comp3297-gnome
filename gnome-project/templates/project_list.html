@@ -5,7 +5,9 @@
         <h1> DSG Projects </h1>
     </head>
     <body>
-        <button type="button" onclick=""> Create a New Project</button>
+        <form action="projects/create-new-project">
+         <button type="submit">Create New Project</button>
+        </form>
         <p> Current Projects</p>
             <ul> { % for project in project_list if current%} </ul>
         <p> Completed Projects</p>
