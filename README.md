@@ -15,11 +15,10 @@ I suggest downloading a DB sqlite viewew if you are interested in lookin at and 
 
 `pip install pipenv` will install an isolated environment to maintain projects
 
-### Repo Setup
-
 cd into your directory
-
 `pipenv install django` will install Django in your virtual environment
+
+activate your virtual environment with `pipenv shell`
 
 ## Working on Code: Using Git
 
