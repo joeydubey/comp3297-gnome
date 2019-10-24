@@ -32,6 +32,14 @@ changes"` when necessary.
 
 When you are done with making changes, push all of your commits `git push origin branch-name`. 
 
+create a new branch: `git checkout -b branchname`
+
+change branches: `git checkout branchname`
+
+deleting a branch: `git branch -D branchname`
+
+what branch am I on? (suggest adding this to ur terminal- google it): `git branch`
+
 
 ### Create Pull Requests
 On the home page of our github reposotory after you've pushed your changes on your development branch. Click the green button "compare and pull request". Here you can describe what changes were made, make sure
