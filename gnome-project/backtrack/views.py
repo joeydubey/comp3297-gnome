@@ -17,6 +17,15 @@ class ViewProjects(TemplateView):
         context['project'] = Project.objects.all()
         return context
 
+class ViewProjects2(TemplateView):
+    template_name = "project_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['project_list1'] = Project.objects.filter(status ="current")
+        context['project_list2'] = Project.objects.filter(status="complete")
+        return context
+
 
 class ViewProject(TemplateView):
     template_name = "project.html"
@@ -35,5 +44,10 @@ class ProjectsViewAll(ListView):
 
     logging.debug('This will get logged')
 
+
+
 def CreateNewProjectView(request):
     return render(request, "create_new_project.html", {})
+
+def CreateNewProjectView2(request):
+    project = Project.objects.create(name="hey")
