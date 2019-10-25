@@ -74,9 +74,19 @@ class SprintBacklog(models.Model):
     name = models.CharField(max_length=200)
     status = models.CharField(max_length=200, default=SprintStatus.CURRENT, choices=SprintStatus.choices())
     productBacklogID = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
+    #users = models.ManyToManyField(User)
 
     def __str__(self):
         return self.name
+
+
+#class SprintBacklog(models.Model):
+#    name = models.CharField(max_length=200)
+#    status = models.CharField(max_length=200, default=SprintStatus.CURRENT, choices=SprintStatus.choices())
+#    productBacklogID = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
+#
+#    def __str__(self):
+#        return self.name
 
 
 class ProductBacklogItem(models.Model):
