@@ -21,6 +21,17 @@ class ProjectStatus(Enum):
         return [(key.name, key.value) for key in cls]
 
 
+class SprintStatus(Enum):
+    CURRENT = "current"
+    COMPLETE = "complete"
+
+    @classmethod
+    def choices(cls):
+        return [(key.name, key.value) for key in cls]
+
+
+
+
 class TaskStatus(Enum):
     IN_PROGRESS = "in progress"
     COMPLETE = "complete"
@@ -60,16 +71,19 @@ class ProductBacklog(models.Model):
 
 
 class SprintBacklog(ProductBacklog):
+    name = models.CharField(max_length=200)
+    status = models.CharField(max_length=200, default=SprintStatus.CURRENT, choices=SprintStatus.choices())
 
     def __str__(self):
         return self.name
 
 
 class ProductBacklogItem(models.Model):
-    name = models.CharField(max_length=200)
+    sprintName = models.CharField(max_length=200)
     description = models.CharField(max_length=500)
     pointEstimate = models.IntegerField()
     productBacklog = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
+    sprintBacklog = models.ForeignKey(SprintBacklog, on_delete=models.CASCADE, default=None)
 
     def __str__(self):
         return self.name
@@ -77,7 +91,6 @@ class ProductBacklogItem(models.Model):
 
 class Task(models.Model):
     name = models.CharField(max_length=200)
-    sprintBacklog = models.ForeignKey(SprintBacklog, on_delete=models.CASCADE)
     description = models.CharField(max_length=500)
     estimatedEffortHours = models.TimeField()
     actualEffortHours = models.TimeField()
@@ -86,4 +99,4 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
-        
+
