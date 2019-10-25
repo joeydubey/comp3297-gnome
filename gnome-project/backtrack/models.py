@@ -70,20 +70,21 @@ class ProductBacklog(models.Model):
         return self.name
 
 
-class SprintBacklog(ProductBacklog):
+class SprintBacklog(models.Model):
     name = models.CharField(max_length=200)
     status = models.CharField(max_length=200, default=SprintStatus.CURRENT, choices=SprintStatus.choices())
+    productBacklogID = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
 
 class ProductBacklogItem(models.Model):
-    sprintName = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
     description = models.CharField(max_length=500)
     pointEstimate = models.IntegerField()
-    productBacklog = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
-    sprintBacklog = models.ForeignKey(SprintBacklog, on_delete=models.CASCADE, default=None)
+    productBacklogID = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
+    sprintBacklogID = models.ForeignKey(SprintBacklog, on_delete=models.CASCADE, default=None)
 
     def __str__(self):
         return self.name
