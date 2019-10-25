@@ -1,3 +1,5 @@
+<h1>Showing a single projects by</h1>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,5 +39,12 @@
                 </ul>
                  { % endfor % }
             </ul>
+      <p> Product Backlog </p>
+          <ul> {% for pbi in pbis_list %} 
+             <li> {{ pbi.name }}</li>
+            {% endfor %}
+          </ul>
+            
     </body>
 </html>
+
