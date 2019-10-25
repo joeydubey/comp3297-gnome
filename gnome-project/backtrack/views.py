@@ -29,7 +29,7 @@ class ViewProject(TemplateView):
         project = self.kwargs['project']
         context = super().get_context_data(**kwargs)
         context['project'] = Project.objects.get(id=project)
-        context['sprint_list'] = SprintBacklog.objects.filter(project=project)
+        context['sprint_list'] = SprintBacklog.objects.filter(project=project.id)
         return context
 
 
