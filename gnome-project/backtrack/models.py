@@ -1,9 +1,20 @@
 from django.db import models
 
+class User(models.Model):
+    name =  models.CharField(max_length=200)
+    type = models.CharField(max_length=200)
+    username = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    password = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
 
 class Project(models.Model):
     name = models.CharField(max_length=200)
     status = models.CharField(max_length=200, default='Not yet started')
+    #users = models.ManyToManyField(User)
 
     def __str__(self):
         return self.name
@@ -48,13 +59,3 @@ class Task(models.Model):
     def __str__(self):
         return self.name
 
-
-class User(models.Model):
-    name =  models.CharField(max_length=200)
-    type = models.CharField(max_length=200)
-    username = models.CharField(max_length=200)
-    email = models.CharField(max_length=200)
-    password = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.name
