@@ -1,7 +1,28 @@
 from django.db import models
+from enum import Enum
+
+
+class ProjectStatus(Enum):
+    CURRENT = "current"
+    COMPLETE = "complete"
+
+    @classmethod
+    def choices(cls):
+        return [(key.value, key.name) for key in cls]
+
+
+class TaskStatus(Enum):
+    IN_PROGRESS = "in progress"
+    COMPLETE = "complete"
+    NOT_YET_STARTED = "not yet started"
+
+    @classmethod
+    def choices(cls):
+        return [(key.value, key.name) for key in cls]
+
 
 class User(models.Model):
-    name =  models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
     type = models.CharField(max_length=200)
     username = models.CharField(max_length=200)
     email = models.CharField(max_length=200)
@@ -13,13 +34,10 @@ class User(models.Model):
 
 class Project(models.Model):
     name = models.CharField(max_length=200)
-    status = models.CharField(max_length=200, default='Not yet started')
+    status = models.CharField(max_length=200, default=ProjectStatus.CURRENT, choices=ProjectStatus.choices())
     #users = models.ManyToManyField(User)
 
     def __str__(self):
-        return self.name
-
-    def get_name(self):
         return self.name
 
 
@@ -53,7 +71,7 @@ class Task(models.Model):
     description = models.CharField(max_length=500)
     estimatedEffortHours = models.TimeField()
     actualEffortHours = models.TimeField()
-    status = models.CharField(max_length=50)
+    status = models.CharField(max_length=50, default=TaskStatus.NOT_YET_STARTED, choices=TaskStatus.choices())
     pbi = models.ForeignKey(ProductBacklogItem, on_delete=models.CASCADE, default=None)
 
     def __str__(self):
