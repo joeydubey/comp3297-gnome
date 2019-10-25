@@ -2,6 +2,16 @@ from django.db import models
 from enum import Enum
 
 
+class UserTypes(Enum):
+    DEVELOPER = "developer"
+    SCRUM_MASTER = "scrum master"
+    PRODUCT_OWNER = "product owner"
+
+    @classmethod
+    def choices(cls):
+        return [(key.value, key.name) for key in cls]
+
+
 class ProjectStatus(Enum):
     CURRENT = "current"
     COMPLETE = "complete"
@@ -23,7 +33,7 @@ class TaskStatus(Enum):
 
 class User(models.Model):
     name = models.CharField(max_length=200)
-    type = models.CharField(max_length=200)
+    type = models.CharField(max_length=200, choices=UserTypes.choices())
     username = models.CharField(max_length=200)
     email = models.CharField(max_length=200)
     password = models.CharField(max_length=200)
