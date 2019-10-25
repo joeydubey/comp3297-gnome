@@ -1,7 +1,8 @@
 <h1>Showing a single projects by</h1>
 
-<!--{{project.name}}-->
-<!--<ul>-->
-<!--{% for project in project_list %}-->
-    <!--<li>[{{ project.status }}] </li>-->
-<!--</ul></html>-->
+<p> Product Backlog </p>
+<ul> {% for pbi in pbis_list %} 
+    <li> {{ pbi.name }}</li>
+</ul>
+
+{% endfor %}
