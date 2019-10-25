@@ -12,7 +12,7 @@
             <ul>
                 {% for project in project_list1 %}
                     <li>{{ project.name }}</li>
-                    <form action="projects/create-new-project">
+                    <form action="projects/{{project.id}}">
                         <button type="submit">view project</button>
                     </form>
                 {% endfor %}
@@ -22,7 +22,7 @@
             <ul>
                 {% for project in project_list2 %}
                     <li>{{ project.name }}</li>
-                    <form action="projects/create-new-project">
+                    <form action="projects/{{project.id}}">
                         <button type="submit">view project</button>
                     </form>
                 {% endfor %}
