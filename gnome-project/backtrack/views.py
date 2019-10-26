@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.urls import reverse
 from django.views.generic.list import ListView
-from backtrack.models import Project, ProductBacklog, SprintBacklog, ProjectStatus, SprintStatus, ProductBacklogItem
+from backtrack.models import Project, ProductBacklog, SprintBacklog, ProjectStatus, SprintStatus, ProductBacklogItem, Task, TaskStatus
 import logging
 
 from django.views.generic.edit import CreateView
@@ -51,7 +51,6 @@ class ViewProject(TemplateView):
 
             if len(sprint_list_current) == 0:
                 print("create a new sprint")
-
 
             context['sprint_list_done'] = sprint_backlogs.filter(status=SprintStatus.COMPLETE.name)
 

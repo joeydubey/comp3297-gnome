@@ -9,7 +9,7 @@
                 body {
                   /*background-color: lightblue;*/
                   font-family: "Trebuchet MS";
-                  font-size: 18px;
+                  font-size: 14px;
                 }
                 
                 p {
@@ -20,7 +20,7 @@
                     background-color: #555555;
                     border: none;
                     color: white;
-                    padding: 6px 12px;
+                    padding: 6px;
                     border-radius: 2px;
                     text-align: center;
                     text-decoration: none;
@@ -111,7 +111,33 @@
             <tr>
                 <td> {{ pbi.name }} </td>
                 <td> {{ pbi.description }} </td>
-                <td> {{ pbi.pointEstimate }} </td>
+
+                 <td>
+                    {% for not_yet_started in pbi.tasks_not_yet_started %}
+                        <button type="button"
+                                class="btn btn-default">
+                            {{ not_yet_started.name }}
+                        </button>
+                    {% endfor %}
+                </td>
+
+                 <td>
+                    {% for in_progress in pbi.tasks_in_progress %}
+                        <button type="button"
+                                class="btn btn-default">
+                            {{ in_progress.name }}
+                        </button>
+                    {% endfor %}
+                </td>
+
+                <td>
+                    {% for complete in pbi.tasks_complete %}
+                        <button type="button"
+                                class="btn btn-default">
+                            {{ complete.name }}
+                        </button>
+                    {% endfor %}
+                </td>
             </tr>
             {% endfor %}
         </table>
@@ -129,12 +155,14 @@
                 <th>Product Backlog Item Name</th>
                 <th>Description</th>
                 <th>Story Points</th>
+                <th>Status</th>
             </tr>
             {% for pbi in pbis_product_backlog_list %}
             <tr>
                 <td> {{ pbi.name }} </td>
                 <td> {{ pbi.description }} </td>
                 <td> {{ pbi.pointEstimate }} </td>
+                <td> {{ pbi.status }} </td>
             </tr>
             {% endfor %}
     </table>
