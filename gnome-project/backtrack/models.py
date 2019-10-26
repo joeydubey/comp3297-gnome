@@ -65,6 +65,13 @@ class Project(models.Model):
     name = models.CharField(max_length=200)
     status = models.CharField(max_length=200, default=ProjectStatus.CURRENT, choices=ProjectStatus.choices())
 
+    def save(self, *args, **kwargs):
+        is_new = True if not self.id else False
+        super(Project, self).save(*args, **kwargs)
+        if is_new:
+            product_backlog = ProductBacklog(name=self.name+" product backlog", project=self)
+            product_backlog.save()
+
     def __str__(self):
         return self.name
 
