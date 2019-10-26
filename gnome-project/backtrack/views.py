@@ -42,7 +42,7 @@ class ViewProject(TemplateView):
             sprint_list_current = sprint_backlogs.filter(status=SprintStatus.CURRENT.name)
 
             if len(sprint_list_current) != 1:
-                print("A PRojECt SHOULD ONLY HAVE ONE CURRENT SPRINT")
+                print("A PROJECT SHOULD ONLY HAVE ONE CURRENT SPRINT")
 
             if len(sprint_list_current) != 0:
                 context["sprint_current"] = sprint_list_current[0]

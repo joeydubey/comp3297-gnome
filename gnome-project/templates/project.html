@@ -3,9 +3,44 @@
     <head>
         <title>Project Details</title>
         <h1>Project Details: {{ project }}</h1>
+        <style>
+                body {
+                  /*background-color: lightblue;*/
+                  font-family: "Trebuchet MS";
+                  font-size: 18px;
+                }
+                
+                p {
+                  font-size: 20px;
+                }
+
+                button {
+                    background-color: #555555;
+                    border: none;
+                    color: white;
+                    padding: 6px 12px;
+                    border-radius: 2px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                }
+        </style>
     </head>
     <body>
-        <p>Completed Sprints</p>
+        <p>Completed Sprints  <button type="button" id="showHideButton" onclick="showHide()" class="btn btn-default">Show</button></p>
+        <script>
+        function showHide() {
+            if (document.getElementById("showHideButton").innerHTML == "Show") {
+                document.getElementById("showHideButton").innerHTML = "Hide";
+                document.getElementById("completedSprints").style.display = "block";
+            }
+            else {
+                document.getElementById("showHideButton").innerHTML = "Show";
+                document.getElementById("completedSprints").style.display = "none";
+            }
+        }
+        </script>
+        <div id="completedSprints" style="display: none;">
         <!-- Completed sprints code-->
             <ul> {% for sprint in sprint_list_done %}
                 <li>{{ sprint.name }} </li>
@@ -22,6 +57,7 @@
                 </ul>
                  {% endfor %}
             </ul>
+        </div>
         <p>Current Sprint Backlog {{ sprint_current.name }}</p>
             <ul> {% for pbi in pbi_sprint_current_list %}
                 <li> {{ pbi.name }} </li>
@@ -36,4 +72,3 @@
             
     </body>
 </html>
-
