@@ -16,8 +16,8 @@ class ViewAllProjects(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['project_list1'] = Project.objects.filter(status=ProjectStatus.CURRENT.value)
-        context['project_list2'] = Project.objects.filter(status=ProjectStatus.COMPLETE.value)
+        context['project_list1'] = Project.objects.filter(status=ProjectStatus.CURRENT.name)
+        context['project_list2'] = Project.objects.filter(status=ProjectStatus.COMPLETE.name)
         return context
 
 
@@ -25,14 +25,30 @@ class ViewProject(TemplateView):
     template_name = "project.html"
 
     def get_context_data(self, **kwargs):
-        project = self.kwargs['project']
+        project_id = self.kwargs['project']
         context = super().get_context_data(**kwargs)
-        context['project'] = Project.objects.filter(name=project)
-        context['sprint_list_current'] = SprintBacklog.objects.filter(status=SprintStatus.CURRENT.value)
-        context['sprint_list_done'] = SprintBacklog.objects.filter(status=SprintStatus.COMPLETE.value)
-        context['pbis_list'] = ProductBacklogItem.objects.all()
-        #print(context['pbis_list'])
-        print(Project.objects.all())
+        project = Project.objects.filter(id=project_id)
+        product_backlog_list = ProductBacklog.objects.filter(project_id=project_id)
+
+        if len(product_backlog_list) != 1:
+            print("A PROJECT SHOULD ONLY HAVE ONE PRODUCT BACKLOG")
+
+        product_backlog = product_backlog_list[0]
+        sprint_backlogs = SprintBacklog.objects.filter(productBacklogID=product_backlog.id)
+        sprint_list_current = sprint_backlogs.filter(status=SprintStatus.CURRENT.name)
+
+        if len(sprint_list_current) != 1:
+            print("A PRojECt SHOULD ONLY HAVE ONE CURRENT SPRINT")
+
+        context["sprint_current"] = sprint_list_current[0]
+        sprint_current_id = sprint_list_current[0].id
+
+        context['pbi_sprint_current_list'] = ProductBacklogItem.objects.filter(sprintBacklogID=sprint_current_id)
+        context['sprint_list_done'] = sprint_backlogs.filter(status=SprintStatus.COMPLETE.name)
+
+        context['pbis_product_backlog_list'] = ProductBacklogItem.objects.filter(productBacklogID=product_backlog.id)
+        print(context['pbis_product_backlog_list'])
+
         return context
 
 
