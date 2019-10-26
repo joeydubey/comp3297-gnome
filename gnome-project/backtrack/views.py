@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from django.urls import reverse
 from django.views.generic.list import ListView
 from backtrack.models import Project, ProductBacklog, SprintBacklog, ProjectStatus, SprintStatus, ProductBacklogItem
 import logging
@@ -27,7 +28,7 @@ class ViewProject(TemplateView):
     def get_context_data(self, **kwargs):
         project_id = self.kwargs['project']
         context = super().get_context_data(**kwargs)
-        project = Project.objects.filter(id=project_id)
+        context['project'] = Project.objects.filter(id=project_id)[0]
         product_backlog_list = ProductBacklog.objects.filter(project_id=project_id)
 
         if len(product_backlog_list) != 1:
@@ -35,19 +36,26 @@ class ViewProject(TemplateView):
 
         product_backlog = product_backlog_list[0]
         sprint_backlogs = SprintBacklog.objects.filter(productBacklogID=product_backlog.id)
-        sprint_list_current = sprint_backlogs.filter(status=SprintStatus.CURRENT.name)
 
-        if len(sprint_list_current) != 1:
-            print("A PRojECt SHOULD ONLY HAVE ONE CURRENT SPRINT")
+        if len(sprint_backlogs) != 0:
 
-        context["sprint_current"] = sprint_list_current[0]
-        sprint_current_id = sprint_list_current[0].id
+            sprint_list_current = sprint_backlogs.filter(status=SprintStatus.CURRENT.name)
 
-        context['pbi_sprint_current_list'] = ProductBacklogItem.objects.filter(sprintBacklogID=sprint_current_id)
-        context['sprint_list_done'] = sprint_backlogs.filter(status=SprintStatus.COMPLETE.name)
+            if len(sprint_list_current) != 1:
+                print("A PRojECt SHOULD ONLY HAVE ONE CURRENT SPRINT")
 
-        context['pbis_product_backlog_list'] = ProductBacklogItem.objects.filter(productBacklogID=product_backlog.id)
-        print(context['pbis_product_backlog_list'])
+            if len(sprint_list_current) != 0:
+                context["sprint_current"] = sprint_list_current[0]
+                sprint_current_id = sprint_list_current[0].id
+                context['pbi_sprint_current_list'] = ProductBacklogItem.objects.filter(sprintBacklogID=sprint_current_id)
+
+            if len(sprint_list_current) == 0:
+                print("create a new sprint")
+
+
+            context['sprint_list_done'] = sprint_backlogs.filter(status=SprintStatus.COMPLETE.name)
+
+            context['pbis_product_backlog_list'] = ProductBacklogItem.objects.filter(productBacklogID=product_backlog.id)
 
         return context
 
@@ -56,5 +64,12 @@ class CreateNewProjectView(CreateView):
     template_name = "project_form.html"
     model = Project
     fields = ['name', 'status']
+
+    def get_success_url(self):
+        return reverse('project', args=(self.object.id,))
+
+    # product_backlog = ProductBacklog(name=fields[0]+" product backlog")
+
+    # product_backlog = ProductBacklog.new()
 
 
