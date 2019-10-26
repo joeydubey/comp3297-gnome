@@ -30,6 +30,16 @@ class SprintStatus(Enum):
         return [(key.name, key.value) for key in cls]
 
 
+class PBIStatus(Enum):
+    IN_PROGRESS = "in progress"
+    COMPLETE = "complete"
+    NOT_YET_STARTED = "not yet started"
+
+    @classmethod
+    def choices(cls):
+        return [(key.name, key.value) for key in cls]
+
+
 class TaskStatus(Enum):
     IN_PROGRESS = "in progress"
     COMPLETE = "complete"
@@ -54,7 +64,6 @@ class User(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=200)
     status = models.CharField(max_length=200, default=ProjectStatus.CURRENT, choices=ProjectStatus.choices())
-    #users = models.ManyToManyField(User)
 
     def __str__(self):
         return self.name
@@ -72,7 +81,6 @@ class SprintBacklog(models.Model):
     name = models.CharField(max_length=200)
     status = models.CharField(max_length=200, default=SprintStatus.CURRENT, choices=SprintStatus.choices())
     productBacklogID = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
-    #users = models.ManyToManyField(User)
 
     def __str__(self):
         return self.name
@@ -84,6 +92,7 @@ class ProductBacklogItem(models.Model):
     pointEstimate = models.IntegerField()
     productBacklogID = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
     sprintBacklogID = models.ForeignKey(SprintBacklog, on_delete=models.CASCADE, default=None)
+    status = models.CharField(max_length=50, default=PBIStatus.NOT_YET_STARTED, choices=PBIStatus.choices())
 
     def __str__(self):
         return self.name

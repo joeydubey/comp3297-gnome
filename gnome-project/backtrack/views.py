@@ -26,29 +26,15 @@ class ViewProject(TemplateView):
 
     def get_context_data(self, **kwargs):
         project_id = self.kwargs['project']
-        # this is 1
-        print(project_id)
-
         context = super().get_context_data(**kwargs)
-
         project = Project.objects.filter(id=project_id)
-        # this is the project object in a query set: <QuerySet [<Project: hannahprojecttest>]>
-        print(project)
-
         product_backlog_list = ProductBacklog.objects.filter(project_id=project_id)
-        # <QuerySet [<ProductBacklog: hannahproduct>]>
-        print(product_backlog_list)
 
         if len(product_backlog_list) != 1:
             print("A PROJECT SHOULD ONLY HAVE ONE PRODUCT BACKLOG")
 
         product_backlog = product_backlog_list[0]
-
         sprint_backlogs = SprintBacklog.objects.filter(productBacklogID=product_backlog.id)
-        # [<SprintBacklog: sprintcurrent>, <SprintBacklog: sprintcomplete1>, <SprintBacklog: sprintcomplete2>]> and confirming with the DB i know that these
-        # three sprint backlogs correspond to the product backlog ID of 1
-        print(sprint_backlogs)
-
         sprint_list_current = sprint_backlogs.filter(status=SprintStatus.CURRENT.name)
 
         if len(sprint_list_current) != 1:
@@ -58,10 +44,7 @@ class ViewProject(TemplateView):
         sprint_current_id = sprint_list_current[0].id
 
         context['pbi_sprint_current_list'] = ProductBacklogItem.objects.filter(sprintBacklogID=sprint_current_id)
-        print(context['pbi_sprint_current_list'])
-
         context['sprint_list_done'] = sprint_backlogs.filter(status=SprintStatus.COMPLETE.name)
-        print(context['sprint_list_done'])
 
         context['pbis_product_backlog_list'] = ProductBacklogItem.objects.filter(productBacklogID=product_backlog.id)
         print(context['pbis_product_backlog_list'])
