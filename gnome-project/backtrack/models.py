@@ -121,8 +121,8 @@ class ProductBacklogItem(models.Model):
 class Task(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=500)
-    estimatedEffortHours = models.TimeField()
-    actualEffortHours = models.TimeField()
+    estimatedEffortHours = models.FloatField()
+    actualEffortHours = models.FloatField()
     status = models.CharField(max_length=50, default=TaskStatus.NOT_YET_STARTED, choices=TaskStatus.choices())
     pbi = models.ForeignKey(ProductBacklogItem, on_delete=models.CASCADE, default=None)
 

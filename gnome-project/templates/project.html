@@ -155,12 +155,14 @@
                 <th>Product Backlog Item Name</th>
                 <th>Description</th>
                 <th>Story Points</th>
+                <th>Status</th>
             </tr>
             {% for pbi in pbis_product_backlog_list %}
             <tr>
                 <td> {{ pbi.name }} </td>
                 <td> {{ pbi.description }} </td>
                 <td> {{ pbi.pointEstimate }} </td>
+                <td> {{ pbi.status }} </td>
             </tr>
             {% endfor %}
     </table>
