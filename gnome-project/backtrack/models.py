@@ -104,6 +104,19 @@ class ProductBacklogItem(models.Model):
     def __str__(self):
         return self.name
 
+    def tasks(self):
+        return Task.objects.filter(pbi=self)
+
+    def tasks_complete(self):
+        return Task.objects.filter(pbi=self, status=TaskStatus.COMPLETE.name)
+
+    def tasks_in_progress(self):
+        return Task.objects.filter(pbi=self, status=TaskStatus.IN_PROGRESS.name)
+
+    def tasks_not_yet_started(self):
+        return Task.objects.filter(pbi=self, status=TaskStatus.NOT_YET_STARTED.name)
+
+
 
 class Task(models.Model):
     name = models.CharField(max_length=200)
