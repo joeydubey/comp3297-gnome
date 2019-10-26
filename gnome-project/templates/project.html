@@ -1,5 +1,3 @@
-<h1>Showing a single projects by</h1>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,35 +7,35 @@
     <body>
         <p>Completed Sprints</p>
         <!-- Completed sprints code-->
-            <ul> { % for sprint in sprint_list if completed% }
+            <ul> {% for sprint in sprint_list_done %}
                 <li>{{ sprint.name }} Backlog</li>
-                <ul> { % for pbi in sprint % }
+                <ul> {% for pb in sprint.productbacklog_set.all %}
                     <li> {{ pbi.name }} </li>
-                    <ul> { % for task in pbi % }
+                    <ul> {% for task in pbi %}
                         <li> {{ task.name }}
                             <!--<form action="projects/create-new-project">-->
                                 <button type="submit">View Task</button>
                             </form>
                         </li>
-                         { % endfor % }
+                         {% endfor %}
                     </ul>
-                     { % endfor % }
+                     {% endfor %}
                 </ul>
-                 { % endfor % }
+                 {% endfor %}
             </ul>
         <p>Current Sprint Backlog</p>
         <!-- Sprint backlog code-->
-            <ul> { % for sprint in sprint_list if current% }
+            <ul> {% for sprint in sprint_list_current %}
                 <li>{{ sprint.name }} Backlog</li>
-                <ul> { % for pbi in sprint % }
+                <ul> {% for pbi in sprint %}
                     <li> {{ pbi.name }} </li>
-                    <ul> { % for task in pbi % }
+                    <ul> {% for task in pbi %}
                         <li> {{ task.name }} </li>
-                         { % endfor % }
+                         {% endfor %}
                     </ul>
-                     { % endfor % }
+                     {% endfor %}
                 </ul>
-                 { % endfor % }
+                 {% endfor %}
             </ul>
       <p> Product Backlog </p>
           <ul> {% for pbi in pbis_list %} 

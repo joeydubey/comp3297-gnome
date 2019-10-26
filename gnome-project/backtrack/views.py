@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
-from backtrack.models import Project, ProductBacklog, SprintBacklog, ProjectStatus, ProductBacklogItem
+from backtrack.models import Project, ProductBacklog, SprintBacklog, ProjectStatus, SprintStatus, ProductBacklogItem
 import logging
 
 from django.views.generic.edit import CreateView
@@ -27,10 +27,11 @@ class ViewProject(TemplateView):
     def get_context_data(self, **kwargs):
         project = self.kwargs['project']
         context = super().get_context_data(**kwargs)
-        context['project'] = Project.objects.get(id=project)
-        context['sprint_list'] = SprintBacklog.objects.filter(project=project)
+        context['project'] = Project.objects.filter(name=project)
+        context['sprint_list_current'] = SprintBacklog.objects.filter(status=SprintStatus.CURRENT.value)
+        context['sprint_list_done'] = SprintBacklog.objects.filter(status=SprintStatus.COMPLETE.value)
         context['pbis_list'] = ProductBacklogItem.objects.all()
-        print(context['pbis_list'])
+        #print(context['pbis_list'])
         print(Project.objects.all())
         return context
 
