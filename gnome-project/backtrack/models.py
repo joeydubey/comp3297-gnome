@@ -108,13 +108,13 @@ class ProductBacklogItem(models.Model):
         return Task.objects.filter(pbi=self)
 
     def tasks_complete(self):
-        return Task.objects.filter(pbi=self, status=TaskStatus.COMPLETE.name)
+        return Task.objects.filter(pbi=self, status=TaskStatus.COMPLETE.value)
 
     def tasks_in_progress(self):
-        return Task.objects.filter(pbi=self, status=TaskStatus.IN_PROGRESS.name)
+        return Task.objects.filter(pbi=self, status=TaskStatus.IN_PROGRESS.value)
 
     def tasks_not_yet_started(self):
-        return Task.objects.filter(pbi=self, status=TaskStatus.NOT_YET_STARTED.name)
+        return Task.objects.filter(pbi=self, status=TaskStatus.NOT_YET_STARTED.value)
 
 
 class Task(models.Model):
@@ -122,7 +122,7 @@ class Task(models.Model):
     description = models.CharField(max_length=500)
     estimatedEffortHours = models.FloatField()
     actualEffortHours = models.FloatField(blank=True, null=True)
-    status = models.CharField(max_length=50, default=TaskStatus.NOT_YET_STARTED, choices=TaskStatus.choices())
+    status = models.CharField(max_length=50, default=TaskStatus.NOT_YET_STARTED.value, choices=TaskStatus.choices())
     pbi = models.ForeignKey(ProductBacklogItem, on_delete=models.CASCADE)
 
     def __str__(self):

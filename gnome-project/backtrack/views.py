@@ -49,6 +49,7 @@ class ViewProject(TemplateView):
                 context["sprint_current"] = sprint_list_current[0]
                 sprint_current_id = sprint_list_current[0].id
                 context['pbi_sprint_current_list'] = ProductBacklogItem.objects.filter(sprintBacklogID=sprint_current_id)
+                print(context['pbi_sprint_current_list'])
 
             if len(sprint_list_current) == 0:
                 print("create a new sprint")
