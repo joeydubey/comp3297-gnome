@@ -123,7 +123,7 @@ class Task(models.Model):
     estimatedEffortHours = models.FloatField()
     actualEffortHours = models.FloatField(blank=True, null=True)
     status = models.CharField(max_length=50, default=TaskStatus.NOT_YET_STARTED, choices=TaskStatus.choices())
-    pbi = models.ForeignKey(ProductBacklogItem, on_delete=models.CASCADE, default=None)
+    pbi = models.ForeignKey(ProductBacklogItem, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

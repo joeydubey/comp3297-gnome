@@ -80,18 +80,24 @@ class CreateNewPBIView(CreateView):
     def get_success_url(self):
         pbi_ID = self.object.id
         pbi = ProductBacklogItem.objects.get(id=pbi_ID)
-        print(pbi)
-        print(pbi.productBacklogID.project_id)
         project = Project.objects.get(id=pbi.productBacklogID.project_id)
-
         return reverse('project', args=(project.id,))
 
 
 class CreateNewTaskView(CreateView):
     template_name = "task_form.html"
     model = Task
-    fields = ['name', 'description', 'estimatedEffortHours', 'status']
+    fields = ['name', 'description', 'estimatedEffortHours']
+
+    def form_valid(self, form):
+        pbi_ID = get_object_or_404(ProductBacklogItem, id=self.kwargs['pbi'])
+        form.instance.pbi = pbi_ID
+        return super(CreateNewTaskView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse('project', args=(self.pbi.productBacklogID.project.object.id,))
+        task_ID = self.object.id
+        task = Task.objects.get(id=task_ID)
+        project = Project.objects.get(id=task.pbi.productBacklogID.project_id)
+
+        return reverse('project', args=(project.id,))
 

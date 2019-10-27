@@ -109,12 +109,19 @@
             </tr>
             {% for pbi in pbi_sprint_current_list %}
             <tr>
-                <td> {{ pbi.name }} </td>
+                <td> {{ pbi.name }}
+                    <form action="{{project.id}}/{{sprint_current.id}}/{{pbi.id}}/create-new-task">
+                         <button type="submit"
+                                class="btn btn-default">
+                         Add Task
+                         </button>
+                    </form>
+                </td>
                 <td> {{ pbi.description }} </td>
 
                  <td>
                     {% for not_yet_started in pbi.tasks_not_yet_started %}
-                        <button type="button"
+                        <button type="submit"
                                 class="btn btn-default">
                             {{ not_yet_started.name }}
                         </button>
@@ -123,7 +130,7 @@
 
                  <td>
                     {% for in_progress in pbi.tasks_in_progress %}
-                        <button type="button"
+                        <button type="submit"
                                 class="btn btn-default">
                             {{ in_progress.name }}
                         </button>
@@ -132,7 +139,7 @@
 
                 <td>
                     {% for complete in pbi.tasks_complete %}
-                        <button type="button"
+                        <button type="submit"
                                 class="btn btn-default">
                             {{ complete.name }}
                         </button>
