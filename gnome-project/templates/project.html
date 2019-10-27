@@ -84,14 +84,14 @@
                         <th>Tasks In Progress</th>
                         <th>Tasks Completed</th>
                     </tr>
-                    {% for pbi in sprint.productbacklog_set.all %}
+                    <!--{ % for pbi in sprint|sprintFilter:sprint.id % }-->
+                    {% for pbi in sprint.pbiList %}
                     <tr>
                         <td> {{ pbi.name }} </td>
                         <td> {{ pbi.description }} </td>
                     </tr>
                     {% endfor %}
                 </table>
-
                 {% endfor %}
             </ul>
 
@@ -107,7 +107,7 @@
                 <th>Tasks In Progress</th>
                 <th>Tasks Completed</th>
             </tr>
-            {% for pbi in pbi_sprint_current_list %}
+            {% for pbi in sprint_current.pbiList %}
             <tr>
                 <td> {{ pbi.name }} </td>
                 <td> {{ pbi.description }} </td>

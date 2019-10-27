@@ -91,6 +91,9 @@ class SprintBacklog(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def pbiList(self):
+        return ProductBacklogItem.objects.filter(sprintBacklogID=self.id)
 
 
 class ProductBacklogItem(models.Model):

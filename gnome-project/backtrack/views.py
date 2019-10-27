@@ -46,14 +46,16 @@ class ViewProject(TemplateView):
 
             if len(sprint_list_current) != 0:
                 context["sprint_current"] = sprint_list_current[0]
-                sprint_current_id = sprint_list_current[0].id
+                '''sprint_current_id = sprint_list_current[0].id
                 context['pbi_sprint_current_list'] = ProductBacklogItem.objects.filter(sprintBacklogID=sprint_current_id)
+                '''
 
             if len(sprint_list_current) == 0:
                 print("create a new sprint")
+            
+            sprint_list_done = sprint_backlogs.filter(status=SprintStatus.COMPLETE.name)
 
-
-            context['sprint_list_done'] = sprint_backlogs.filter(status=SprintStatus.COMPLETE.name)
+            context['sprint_list_done'] = sprint_list_done
 
             context['pbis_product_backlog_list'] = ProductBacklogItem.objects.filter(productBacklogID=product_backlog.id)
 
