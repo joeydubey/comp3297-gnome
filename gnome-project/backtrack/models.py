@@ -9,7 +9,7 @@ class UserTypes(Enum):
 
     @classmethod
     def choices(cls):
-        return [(key.name, key.value) for key in cls]
+        return [(key.value, key.name) for key in cls]
 
 
 class ProjectStatus(Enum):
@@ -18,7 +18,7 @@ class ProjectStatus(Enum):
 
     @classmethod
     def choices(cls):
-        return [(key.name, key.value) for key in cls]
+        return [(key.value, key.name) for key in cls]
 
 
 class SprintStatus(Enum):
@@ -27,7 +27,7 @@ class SprintStatus(Enum):
 
     @classmethod
     def choices(cls):
-        return [(key.name, key.value) for key in cls]
+        return [(key.value, key.name) for key in cls]
 
 
 class PBIStatus(Enum):
@@ -37,7 +37,7 @@ class PBIStatus(Enum):
 
     @classmethod
     def choices(cls):
-        return [(key.name, key.value) for key in cls]
+        return [(key.value, key.name) for key in cls]
 
 
 class TaskStatus(Enum):
@@ -47,7 +47,7 @@ class TaskStatus(Enum):
 
     @classmethod
     def choices(cls):
-        return [(key.name, key.value) for key in cls]
+        return [(key.value, key.name) for key in cls]
 
 
 class User(models.Model):
