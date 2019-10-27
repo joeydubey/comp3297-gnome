@@ -96,10 +96,10 @@ class SprintBacklog(models.Model):
 class ProductBacklogItem(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=500)
-    pointEstimate = models.IntegerField()
+    pointEstimate = models.IntegerField(blank=True, null=True)
     productBacklogID = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
-    sprintBacklogID = models.ForeignKey(SprintBacklog, on_delete=models.CASCADE, default=None)
-    status = models.CharField(max_length=50, default=PBIStatus.NOT_YET_STARTED, choices=PBIStatus.choices())
+    sprintBacklogID = models.ForeignKey(SprintBacklog, on_delete=models.CASCADE, blank=True, null=True)
+    status = models.CharField(max_length=50, default=PBIStatus.NOT_YET_STARTED.value, choices=PBIStatus.choices())
 
     def __str__(self):
         return self.name
@@ -117,12 +117,11 @@ class ProductBacklogItem(models.Model):
         return Task.objects.filter(pbi=self, status=TaskStatus.NOT_YET_STARTED.name)
 
 
-
 class Task(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=500)
     estimatedEffortHours = models.FloatField()
-    actualEffortHours = models.FloatField()
+    actualEffortHours = models.FloatField(blank=True, null=True)
     status = models.CharField(max_length=50, default=TaskStatus.NOT_YET_STARTED, choices=TaskStatus.choices())
     pbi = models.ForeignKey(ProductBacklogItem, on_delete=models.CASCADE, default=None)
 

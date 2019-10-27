@@ -4,6 +4,8 @@ from django.urls import reverse
 from django.views.generic.list import ListView
 from backtrack.models import Project, ProductBacklog, SprintBacklog, ProjectStatus, SprintStatus, ProductBacklogItem, Task, TaskStatus
 import logging
+from django.shortcuts import get_object_or_404
+
 
 from django.views.generic.edit import CreateView
 
@@ -34,11 +36,10 @@ class ViewProject(TemplateView):
         if len(product_backlog_list) != 1:
             print("A PROJECT SHOULD ONLY HAVE ONE PRODUCT BACKLOG")
 
-        product_backlog = product_backlog_list[0]
-        sprint_backlogs = SprintBacklog.objects.filter(productBacklogID=product_backlog.id)
+        context['product_backlog'] = product_backlog_list[0]
+        sprint_backlogs = SprintBacklog.objects.filter(productBacklogID=context['product_backlog'].id)
 
         if len(sprint_backlogs) != 0:
-
             sprint_list_current = sprint_backlogs.filter(status=SprintStatus.CURRENT.name)
 
             if len(sprint_list_current) != 1:
@@ -53,9 +54,7 @@ class ViewProject(TemplateView):
                 print("create a new sprint")
 
             context['sprint_list_done'] = sprint_backlogs.filter(status=SprintStatus.COMPLETE.name)
-
-            context['pbis_product_backlog_list'] = ProductBacklogItem.objects.filter(productBacklogID=product_backlog.id)
-
+            context['pbis_product_backlog_list'] = ProductBacklogItem.objects.filter(productBacklogID=context['product_backlog'].id)
         return context
 
 
@@ -67,8 +66,32 @@ class CreateNewProjectView(CreateView):
     def get_success_url(self):
         return reverse('project', args=(self.object.id,))
 
-    # product_backlog = ProductBacklog(name=fields[0]+" product backlog")
 
-    # product_backlog = ProductBacklog.new()
+class CreateNewPBIView(CreateView):
+    template_name = "pbi_form.html"
+    model = ProductBacklogItem
+    fields = ['name', 'description']
 
+    def form_valid(self, form):
+        product_backlogID = get_object_or_404(ProductBacklog, id=self.kwargs['productBacklog'])
+        form.instance.productBacklogID = product_backlogID
+        return super(CreateNewPBIView, self).form_valid(form)
+
+    def get_success_url(self):
+        pbi_ID = self.object.id
+        pbi = ProductBacklogItem.objects.get(id=pbi_ID)
+        print(pbi)
+        print(pbi.productBacklogID.project_id)
+        project = Project.objects.get(id=pbi.productBacklogID.project_id)
+
+        return reverse('project', args=(project.id,))
+
+
+class CreateNewTaskView(CreateView):
+    template_name = "task_form.html"
+    model = Task
+    fields = ['name', 'description', 'estimatedEffortHours', 'status']
+
+    def get_success_url(self):
+        return reverse('project', args=(self.pbi.productBacklogID.project.object.id,))
 
