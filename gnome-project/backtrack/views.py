@@ -22,6 +22,16 @@ class ViewAllProjects(TemplateView):
         return context
 
 
+class ViewTask(TemplateView):
+    template_name = 'task.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        task_id = self.kwargs['task']
+        context['task'] = Task.objects.filter(id=task_id)[0]
+        return context
+
+
 class ViewProject(TemplateView):
     template_name = "project.html"
 

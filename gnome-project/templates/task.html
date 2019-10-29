@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Details</title>
+</head>
+<body>
+    <p> For Product Backlog Item: {{task.pbi}} </p>
+    <p> Task: {{task.name}}
+        <button type="submit"
+                 class="btn btn-default">
+            Edit
+        </button>
+    </p>
+    <ul> <li>
+            Description: {{task.description}}
+        </li>
+        <li>
+            Estimated Effort Hours: {{task.estimatedEffortHours}}
+        </li>
+        <li>
+            Actual Effort Hours: {{task.actualEffortHours}}
+        </li>
+        <li>
+            Status: {{task.status}}
+        </li>
+
+    </ul>
+
+</body>
+</html>
