@@ -57,7 +57,8 @@ class ViewProject(TemplateView):
 
             context['sprint_list_done'] = sprint_list_done
 
-            context['pbis_product_backlog_list'] = ProductBacklogItem.objects.filter(productBacklogID=product_backlog.id)
+            #context['pbis_product_backlog_list'] = ProductBacklogItem.objects.filter(productBacklogID=product_backlog.id)
+            context['product_backlog'] = product_backlog
 
         return context
 
