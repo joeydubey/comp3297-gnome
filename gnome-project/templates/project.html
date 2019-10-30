@@ -109,7 +109,14 @@
             </tr>
             {% for pbi in pbi_sprint_current_list %}
             <tr>
-                <td> {{ pbi.name }} </td>
+                <td> {{ pbi.name }}
+                    <form action="{{project.id}}/{{sprint_current.id}}/{{pbi.id}}/create-new-task">
+                         <button type="submit"
+                                class="btn btn-default">
+                         Add Task
+                         </button>
+                    </form>
+                </td>
                 <td> {{ pbi.description }} </td>
 
                  <td>
@@ -126,7 +133,7 @@
                  <td>
                     {% for in_progress in pbi.tasks_in_progress %}
                      <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
-                        <button type="button"
+                        <button type="submit"
                                 class="btn btn-default">
                             {{ in_progress.name }}
                         </button>
@@ -137,7 +144,7 @@
                 <td>
                     {% for complete in pbi.tasks_complete %}
                     <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
-                        <button type="button"
+                        <button type="submit"
                                 class="btn btn-default">
                             {{ complete.name }}
                         </button>
@@ -150,10 +157,12 @@
 
     <!-- Product Backlog-->
       <p> Product Backlog
-           <button type="button"
+          <form action="{{project.id}}/{{product_backlog.id}}/create-new-pbi">
+           <button type="submit"
                     class="btn btn-default">
                 Add Product Backlog Item
             </button>
+        </form>
       </p>
 
       <table>
