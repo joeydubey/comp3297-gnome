@@ -5,11 +5,23 @@ from django.views.generic.list import ListView
 from backtrack.models import Project, ProductBacklog, SprintBacklog, ProjectStatus, SprintStatus, ProductBacklogItem, Task, TaskStatus
 import logging
 
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # Create your views here.
 
 logging.basicConfig(level=logging.DEBUG)
+
+
+class DeletePBI(DeleteView):
+    template_name = "productbacklogitem_confirm_delete.html"
+    model = ProductBacklogItem
+    slug_field = 'pbi'
+
+    def get_success_url(self):
+        pbi_ID = self.object.id
+        pbi = ProductBacklogItem.objects.get(id=pbi_ID)
+        project = Project.objects.get(id=pbi.productBacklogID.project_id)
+        return reverse('project', args=(project.id,))
 
 
 class EditPBI(UpdateView):
@@ -24,11 +36,6 @@ class EditPBI(UpdateView):
         pbi = ProductBacklogItem.objects.get(id=pbi_ID)
         project = Project.objects.get(id=pbi.productBacklogID.project_id)
         return reverse('project', args=(project.id,))
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['project_list1'] = Project.objects.filter(status=ProjectStatus.CURRENT.name)
-    #     context['project_list2'] = Project.objects.filter(status=ProjectStatus.COMPLETE.name)
-    #     return context
 
 
 class ViewAllProjects(TemplateView):
