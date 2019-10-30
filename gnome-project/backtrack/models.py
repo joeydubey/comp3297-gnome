@@ -116,7 +116,6 @@ class ProductBacklogItem(models.Model):
     def tasks_not_yet_started(self):
         return Task.objects.filter(pbi=self, status=TaskStatus.NOT_YET_STARTED.value)
 
-
 class Task(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=500)

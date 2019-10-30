@@ -121,28 +121,34 @@
 
                  <td>
                     {% for not_yet_started in pbi.tasks_not_yet_started %}
+                     <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
                         <button type="submit"
                                 class="btn btn-default">
                             {{ not_yet_started.name }}
                         </button>
+                     </form>
                     {% endfor %}
                 </td>
 
                  <td>
                     {% for in_progress in pbi.tasks_in_progress %}
+                     <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
                         <button type="submit"
                                 class="btn btn-default">
                             {{ in_progress.name }}
                         </button>
+                    </form>
                     {% endfor %}
                 </td>
 
                 <td>
                     {% for complete in pbi.tasks_complete %}
+                    <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
                         <button type="submit"
                                 class="btn btn-default">
                             {{ complete.name }}
                         </button>
+                    </form>
                     {% endfor %}
                 </td>
             </tr>
@@ -168,7 +174,20 @@
             </tr>
             {% for pbi in pbis_product_backlog_list %}
             <tr>
-                <td> {{ pbi.name }} </td>
+                <td> {{ pbi.name }}
+                    <form action="product-backlog/pbi/{{pbi.id}}">
+                        <button type="submit"
+                                class="btn btn-default">
+                            edit
+                        </button>
+                    </form>
+                    <form action="product-backlog/pbi/delete-{{pbi.id}}">
+                        <button type="submit"
+                                class="btn btn-default">
+                            delete
+                        </button>
+                    </form>
+                </td>
                 <td> {{ pbi.description }} </td>
                 <td> {{ pbi.pointEstimate }} </td>
                 <td> {{ pbi.status }} </td>
