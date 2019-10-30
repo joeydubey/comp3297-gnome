@@ -5,11 +5,17 @@
     <title>Task Details</title>
 </head>
 <body>
-    <p> For Product Backlog Item: {{task.pbi}} </p>
-    <p> Task: {{task.name}}
+    <p> For Product Backlog Item {{task.pbi}} </p>
+    <p> Task {{task.name}}
         <button type="submit"
+                value="edit"
                  class="btn btn-default">
             Edit
+        </button>
+         <button type="submit"
+                 value="delete"
+                 class="btn btn-default">
+            Delete
         </button>
     </p>
     <ul> <li>
@@ -24,7 +30,6 @@
         <li>
             Status: {{task.status}}
         </li>
-
     </ul>
 
 </body>

@@ -165,7 +165,14 @@
             </tr>
             {% for pbi in pbis_product_backlog_list %}
             <tr>
-                <td> {{ pbi.name }} </td>
+                <td> {{ pbi.name }}
+                    <form action="product-backlog/pbi/{{pbi.id}}">
+                        <button type="submit"
+                                class="btn btn-default">
+                            edit
+                        </button>
+                    </form>
+                </td>
                 <td> {{ pbi.description }} </td>
                 <td> {{ pbi.pointEstimate }} </td>
                 <td> {{ pbi.status }} </td>
