@@ -63,7 +63,7 @@ class User(models.Model):
 
 class Project(models.Model):
     name = models.CharField(max_length=200)
-    status = models.CharField(max_length=200, default=ProjectStatus.CURRENT, choices=ProjectStatus.choices())
+    status = models.CharField(max_length=200, default=ProjectStatus.CURRENT.value, choices=ProjectStatus.choices())
 
     def save(self, *args, **kwargs):
         is_new = True if not self.id else False
@@ -86,7 +86,7 @@ class ProductBacklog(models.Model):
 
 class SprintBacklog(models.Model):
     name = models.CharField(max_length=200)
-    status = models.CharField(max_length=200, default=SprintStatus.CURRENT, choices=SprintStatus.choices())
+    status = models.CharField(max_length=200, default=SprintStatus.CURRENT.value, choices=SprintStatus.choices())
     productBacklogID = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
 
     def __str__(self):

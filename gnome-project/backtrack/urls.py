@@ -10,6 +10,6 @@ urlpatterns = [path('projects', views.ViewAllProjects.as_view(), name='projects'
                path('projects/product-backlog/pbi/delete-<int:pk>', views.DeletePBI.as_view(), name='deletePBI'),
                path('projects/<int:project>/<int:productBacklog>/create-new-pbi', views.CreateNewPBIView.as_view(), name='newPBI'),
                path('projects/<int:project>/<int:SprintBacklog>/<int:pbi>/create-new-task', views.CreateNewTaskView.as_view(), name='newTASK'),
-               path('projects/<int:project>/create-new-sprint', views.CreateNewSprintView.as_view(), name='newSprint'),
+               path('projects/<int:project>/<int:productBacklog>/create-new-sprint', views.CreateNewSprintView.as_view(), name='newSprint'),
 
                ]
