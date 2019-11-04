@@ -45,8 +45,8 @@ class ViewAllProjects(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['project_list1'] = Project.objects.filter(status=ProjectStatus.CURRENT.name)
-        context['project_list2'] = Project.objects.filter(status=ProjectStatus.COMPLETE.name)
+        context['project_list1'] = Project.objects.filter(status=ProjectStatus.CURRENT.value)
+        context['project_list2'] = Project.objects.filter(status=ProjectStatus.COMPLETE.value)
         return context
 
 
@@ -76,22 +76,23 @@ class ViewProject(TemplateView):
         sprint_backlogs = SprintBacklog.objects.filter(productBacklogID=context['product_backlog'].id)
 
         if len(sprint_backlogs) != 0:
-            sprint_list_current = sprint_backlogs.filter(status=SprintStatus.CURRENT.name)
+            sprint_list_current = sprint_backlogs.filter(status=SprintStatus.CURRENT.value)
+            print(sprint_list_current)
 
-            if len(sprint_list_current) != 1:
+            if len(sprint_list_current) > 1:
                 print("A PROJECT SHOULD ONLY HAVE ONE CURRENT SPRINT")
 
             if len(sprint_list_current) != 0:
                 context["sprint_current"] = sprint_list_current[0]
+                print(context['sprint_current'])
                 sprint_current_id = sprint_list_current[0].id
                 context['pbi_sprint_current_list'] = ProductBacklogItem.objects.filter(sprintBacklogID=sprint_current_id)
-                print(context['pbi_sprint_current_list'])
 
             if len(sprint_list_current) == 0:
                 print("create a new sprint")
 
-            context['sprint_list_done'] = sprint_backlogs.filter(status=SprintStatus.COMPLETE.name)
-            context['pbis_product_backlog_list'] = ProductBacklogItem.objects.filter(productBacklogID=context['product_backlog'].id)
+        context['sprint_list_done'] = sprint_backlogs.filter(status=SprintStatus.COMPLETE.value)
+        context['pbis_product_backlog_list'] = ProductBacklogItem.objects.filter(productBacklogID=context['product_backlog'].id)
         return context
 
 
@@ -135,6 +136,24 @@ class CreateNewTaskView(CreateView):
         task_ID = self.object.id
         task = Task.objects.get(id=task_ID)
         project = Project.objects.get(id=task.pbi.productBacklogID.project_id)
-
         return reverse('project', args=(project.id,))
 
+
+class CreateNewSprintView(CreateView):
+    template_name = "sprint_form.html"
+    model = SprintBacklog
+    fields = ['name']
+    print("do you even get here")
+
+    def form_valid(self, form):
+        product_backlog = get_object_or_404(ProductBacklog, id=self.kwargs['productBacklog'])
+        form.instance.productBacklogID = product_backlog
+        return super(CreateNewSprintView, self).form_valid(form)
+
+    def get_success_url(self):
+        productBacklogID = self.object.productBacklogID
+        print(productBacklogID)
+        productBacklog = ProductBacklog.objects.get(id=productBacklogID.id)
+        project = Project.objects.get(id=productBacklog.project.id)
+        print(project)
+        return reverse('project', args=(project.id,))

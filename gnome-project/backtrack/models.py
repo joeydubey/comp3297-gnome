@@ -63,7 +63,7 @@ class User(models.Model):
 
 class Project(models.Model):
     name = models.CharField(max_length=200)
-    status = models.CharField(max_length=200, default=ProjectStatus.CURRENT, choices=ProjectStatus.choices())
+    status = models.CharField(max_length=200, default=ProjectStatus.CURRENT.value, choices=ProjectStatus.choices())
 
     def save(self, *args, **kwargs):
         is_new = True if not self.id else False
@@ -86,7 +86,7 @@ class ProductBacklog(models.Model):
 
 class SprintBacklog(models.Model):
     name = models.CharField(max_length=200)
-    status = models.CharField(max_length=200, default=SprintStatus.CURRENT, choices=SprintStatus.choices())
+    status = models.CharField(max_length=200, default=SprintStatus.CURRENT.value, choices=SprintStatus.choices())
     productBacklogID = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -114,7 +114,8 @@ class ProductBacklogItem(models.Model):
         return Task.objects.filter(pbi=self, status=TaskStatus.IN_PROGRESS.value)
 
     def tasks_not_yet_started(self):
-        return Task.objects.filter(pbi=self, status=TaskStatus.NOT_YET_STARTED.value)
+        return Task.objects.filter(pbi=self.pk, status=TaskStatus.NOT_YET_STARTED.value)
+
 
 class Task(models.Model):
     name = models.CharField(max_length=200)
@@ -123,9 +124,6 @@ class Task(models.Model):
     actualEffortHours = models.FloatField(blank=True, null=True)
     status = models.CharField(max_length=50, default=TaskStatus.NOT_YET_STARTED.value, choices=TaskStatus.choices())
     pbi = models.ForeignKey(ProductBacklogItem, on_delete=models.CASCADE)
-
-    def pbi(self):
-        return self.pbi
 
     def __str__(self):
         return self.name
