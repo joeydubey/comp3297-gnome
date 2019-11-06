@@ -61,8 +61,19 @@
             </ul>
         </div>
 
+    <hr>
+
         <!-- Current Sprint-->
-        <p>Current Sprint Backlog {{ sprint_current.name }}</p>
+        <p> {% if sprint_current == None %}
+            <form action="{{project.id}}/{{product_backlog.id}}/create-new-sprint">
+                <button type="submit"
+                        class="btn btn-default btn-lg">
+                    Create New Sprint
+                </button>
+            </form>
+            {% else %}
+
+            Current Sprint Backlog {{ sprint_current.name }}
         <table>
             <tr>
                 <th>Sprint Backlog Item Name</th>
@@ -73,21 +84,65 @@
             </tr>
             {% for pbi in sprint_current.pbiList %}
             <tr>
-                <td> {{ pbi.name }} </td>
+                <td> {{ pbi.name }}
+                    <form action="{{project.id}}/{{sprint_current.id}}/{{pbi.id}}/create-new-task">
+                         <button type="submit"
+                                class="btn btn-default">
+                         Add Task
+                         </button>
+                    </form>
+                </td>
                 <td> {{ pbi.description }} </td>
-                <td> {{ pbi.pointEstimate }} </td>
-                <td></td>
-                <td></td>
+                <td>
+                    {% for not_yet_started in pbi.tasks_not_yet_started %}
+                     <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
+                        <button type="submit"
+                                class="btn btn-default">
+                            {{ not_yet_started.name }}
+                        </button>
+                     </form>
+                    {% endfor %}
+                </td>
+
+                 <td>
+                    {% for in_progress in pbi.tasks_in_progress %}
+                     <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
+                        <button type="submit"
+                                class="btn btn-default">
+                            {{ in_progress.name }}
+                        </button>
+                    </form>
+                    {% endfor %}
+                </td>
+
+                <td>
+                    {% for complete in pbi.tasks_complete %}
+                    <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
+                        <button type="submit"
+                                class="btn btn-default">
+                            {{ complete.name }}
+                        </button>
+                    </form>
+                    {% endfor %}
+                </td>
             </tr>
             {% endfor %}
         </table>
 
+            {% endif%}
+        </p>
+
+
+    <hr>
+
     <!-- Product Backlog-->
       <p> Product Backlog
-           <button type="button"
+          <form action="{{project.id}}/{{product_backlog.id}}/create-new-pbi">
+           <button type="submit"
                     class="btn btn-default">
                 Add Product Backlog Item
             </button>
+        </form>
       </p>
 
       <table>
@@ -95,12 +150,27 @@
                 <th>Product Backlog Item Name</th>
                 <th>Description</th>
                 <th>Story Points</th>
+                <th>Status</th>
             </tr>
             {% for pbi in product_backlog.pbiList %}
             <tr>
-                <td> {{ pbi.name }} </td>
+                <td> {{ pbi.name }}
+                    <form action="product-backlog/pbi/{{pbi.id}}">
+                        <button type="submit"
+                                class="btn btn-default">
+                            edit
+                        </button>
+                    </form>
+                    <form action="product-backlog/pbi/delete-{{pbi.id}}">
+                        <button type="submit"
+                                class="btn btn-default">
+                            delete
+                        </button>
+                    </form>
+                </td>
                 <td> {{ pbi.description }} </td>
                 <td> {{ pbi.pointEstimate }} </td>
+                <td> {{ pbi.status }} </td>
             </tr>
             {% endfor %}
     </table>
