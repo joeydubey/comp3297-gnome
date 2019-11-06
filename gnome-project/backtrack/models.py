@@ -91,16 +91,6 @@ class SprintBacklog(models.Model):
 
     def __str__(self):
         return self.name
-    
-    def pbis(self):
-        return ProductBacklogItem.objects.filter(sprintBacklogID=self)
-   
-    @property
-    def sprint_cummulative_effort_hours(self):
-        x = 0 
-        for PBI in self.pbis():
-            x += PBI.tasks_cummulative_effort_hours
-        return x
 
 
 class ProductBacklogItem(models.Model):
@@ -125,13 +115,7 @@ class ProductBacklogItem(models.Model):
 
     def tasks_not_yet_started(self):
         return Task.objects.filter(pbi=self.pk, status=TaskStatus.NOT_YET_STARTED.value)
-    
-    @property
-    def tasks_cummulative_effort_hours(self):
-        x = 0 
-        for Task in self.tasks():
-            x += Task.estimatedEffortHours
-        return x
+
 
 class Task(models.Model):
     name = models.CharField(max_length=200)
@@ -143,6 +127,4 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
-    def tasks_estimated_effort_hours(self):
-        return self.estimatedEffortHours
 
