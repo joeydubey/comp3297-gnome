@@ -116,6 +116,7 @@
                 <th>Tasks Not Yet Started</th>
                 <th>Tasks In Progress</th>
                 <th>Tasks Completed</th>
+                <th>Priority</th>
             </tr>
             {% for pbi in pbi_sprint_current_list %}
             <tr>
@@ -161,6 +162,7 @@
                     </form>
                     {% endfor %}
                 </td>
+                <td>{{ pbi.priority }}</td>
             </tr>
             {% endfor %}
         </table>
@@ -187,6 +189,7 @@
                 <th>Description</th>
                 <th>Story Points</th>
                 <th>Status</th>
+                <th>Priority</th>
             </tr>
             {% for pbi in pbis_product_backlog_list %}
             <tr>
@@ -207,6 +210,7 @@
                 <td> {{ pbi.description }} </td>
                 <td> {{ pbi.pointEstimate }} </td>
                 <td> {{ pbi.status }} </td>
+                <td> {{ pbi.priority }} </td>
             </tr>
             {% endfor %}
     </table>

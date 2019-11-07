@@ -31,7 +31,7 @@ class EditPBI(UpdateView):
 
     model = ProductBacklogItem
     slug_field = "pbi"
-    fields = ['name', 'description', 'pointEstimate', 'status']
+    fields = ['name', 'description', 'pointEstimate', 'status', 'priority']
 
     def get_success_url(self):
         pbi_ID = self.object.id
@@ -86,13 +86,12 @@ class ViewProject(TemplateView):
                 context["sprint_current"] = sprint_list_current[0]
                 print(context['sprint_current'])
                 sprint_current_id = sprint_list_current[0].id
-                context['pbi_sprint_current_list'] = ProductBacklogItem.objects.filter(sprintBacklogID=sprint_current_id)
-
+                context['pbi_sprint_current_list'] = ProductBacklogItem.objects.filter(sprintBacklogID=sprint_current_id).order_by('priority')
             if len(sprint_list_current) == 0:
                 print("create a new sprint")
 
         context['sprint_list_done'] = sprint_backlogs.filter(status=SprintStatus.COMPLETE.value)
-        context['pbis_product_backlog_list'] = ProductBacklogItem.objects.filter(productBacklogID=context['product_backlog'].id)
+        context['pbis_product_backlog_list'] = ProductBacklogItem.objects.filter(productBacklogID=context['product_backlog'].id).order_by('priority')
         return context
 
 
@@ -108,7 +107,7 @@ class CreateNewProjectView(CreateView):
 class CreateNewPBIView(CreateView):
     template_name = "pbi_form.html"
     model = ProductBacklogItem
-    fields = ['name', 'description']
+    fields = ['name', 'description', 'priority']
 
     def form_valid(self, form):
         product_backlogID = get_object_or_404(ProductBacklog, id=self.kwargs['productBacklog'])

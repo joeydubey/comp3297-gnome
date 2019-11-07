@@ -100,6 +100,7 @@ class ProductBacklogItem(models.Model):
     productBacklogID = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
     sprintBacklogID = models.ForeignKey(SprintBacklog, on_delete=models.CASCADE, blank=True, null=True)
     status = models.CharField(max_length=50, default=PBIStatus.NOT_YET_STARTED.value, choices=PBIStatus.choices())
+    priority = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.name
