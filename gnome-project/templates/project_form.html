@@ -1,6 +1,16 @@
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save">
-    <form action="projects/{{project.id}}">
-    </form>
-</form>
+{%load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/template.css' %}">
+        <div class="page-header">
+            <h1 style="text-align: center;"><img width="144" src="{% static 'backtrack.svg' %}" alt="Backtrack"/></h1>
+        </div>
+    </head>
+    <body>
+        <form method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Save">
+            <form action="projects/{{project.id}}"></form>
+        </form>
+    </body>
+</html>

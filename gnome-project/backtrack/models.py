@@ -83,6 +83,8 @@ class ProductBacklog(models.Model):
     def __str__(self):
         return self.name
 
+    def pbiList(self):
+        return ProductBacklogItem.objects.filter(productBacklogID=self.id)
 
 class SprintBacklog(models.Model):
     name = models.CharField(max_length=200)
@@ -92,6 +94,7 @@ class SprintBacklog(models.Model):
     def __str__(self):
         return self.name
     
+
     def pbis(self):
         return ProductBacklogItem.objects.filter(sprintBacklogID=self.id)
    
