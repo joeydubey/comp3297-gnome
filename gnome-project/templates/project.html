@@ -1,51 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Project Details</title>
-
-        <h1>Project Details: {{ project }}</h1>
-
-        <style>
-                body {
-                  /*background-color: lightblue;*/
-                  font-family: "Trebuchet MS";
-                  font-size: 14px;
-                }
-                
-                p {
-                  font-size: 20px;
-                }
-
-                button {
-                    background-color: #555555;
-                    border: none;
-                    color: white;
-                    padding: 6px;
-                    border-radius: 2px;
-                    text-align: center;
-                    text-decoration: none;
-                    display: inline-block;
-                }
-
-                table {
-                    font-family: arial, sans-serif;
-                    border-collapse: collapse;
-                    width: 70%;
-                }
-                
-                td, th {
-                    border: 1px solid #dddddd;
-                    text-align: left;
-                    padding: 8px;
-                }
-                
-                tr:nth-child(even) {
-                    background-color: #dddddd;
-                }
-        </style>
-
+        <link rel="stylesheet" href="{% static 'css/template.css' %}">
+        <title>Project Details: {{ project }}</title>
+        <div class="page-header">
+            <h1 style="text-align: center;"><img width="144" src="{% static 'backtrack.svg' %}" alt="Backtrack"/></h1>
+        </div>
+        <h2>Project Details: {{ project }}</h2>
+        <style></style>
     </head>
-
+    <body>
     <!--Completed sprints-->
         <p> Completed Sprint Backlogs
             <button type="button"
@@ -55,7 +20,6 @@
                 Show
             </button>
         </p>
-
         <script>
         function showHide() {
             if (document.getElementById("showHideButton").innerHTML == "Show") {
@@ -68,14 +32,14 @@
             }
         }
         </script>
-
         <div id="completedSprints" style="display: none;">
         <!-- Completed sprints code-->
             <ul> {% for sprint in sprint_list_done %}
                 <li>
                     Sprint {{ sprint.name }} Backlog
                 </li>
-                 <table>
+                <br>
+                <table>
                     <tr>
                         <th>Sprint Backlog Item Name</th>
                         <th>Description</th>
@@ -83,17 +47,18 @@
                         <th>Tasks In Progress</th>
                         <th>Tasks Completed</th>
                     </tr>
-                    {% for pbi in sprint.productbacklog_set.all %}
+                    {% for pbi in sprint.pbiList %}
                     <tr>
                         <td> {{ pbi.name }} </td>
                         <td> {{ pbi.description }} </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     {% endfor %}
                 </table>
-
                 {% endfor %}
             </ul>
-
         </div>
 
     <hr>
@@ -120,7 +85,7 @@
                 <th>Actual Effort Hours</th>
                 <th>Work Remaining</th>
             </tr>
-            {% for pbi in pbi_sprint_current_list %}
+            {% for pbi in sprint_current.pbiList %}
             <tr>
                 <td> {{ pbi.name }}
                     <form action="{{project.id}}/{{sprint_current.id}}/{{pbi.id}}/create-new-task">
@@ -131,8 +96,7 @@
                     </form>
                 </td>
                 <td> {{ pbi.description }} </td>
-
-                 <td>
+                <td>
                     {% for not_yet_started in pbi.tasks_not_yet_started %}
                      <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
                         <button type="submit"
@@ -201,7 +165,7 @@
                 <th>Story Points</th>
                 <th>Status</th>
             </tr>
-            {% for pbi in pbis_product_backlog_list %}
+            {% for pbi in product_backlog.pbiList %}
             <tr>
                 <td> {{ pbi.name }}
                     <form action="product-backlog/pbi/{{pbi.id}}">

@@ -1,35 +1,53 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="{% static 'css/template.css' %}">
         <title> Project List </title>
-        <h1> DSG Projects </h1>
+        <div class="page-header">
+            <h1 style="text-align: center;"><img width="144" src="{% static 'backtrack.svg' %}" alt="Backtrack"/></h1>
+        </div>
+        <h2> DSG Projects </h1>
+        <style></style>
     </head>
     <body>
         <form action="projects/create-new-project">
-         <button type="submit">
-             Create New Project
-         </button>
+            <button type="submit">Create New Project</button>
         </form>
         <p> Current Projects</p>
-            <ul>
-                {% for project in project_list1 %}
-                    <li>{{ project.name }}</li>
-                    <form action="projects/{{project.id}}">
-                        <button type="submit">view project</button>
-                    </form>
-                {% endfor %}
-
-            </ul>
-
+            <table>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Details</th>
+                    </tr>
+                    {% for project in project_list1 %}
+                    <tr>
+                        <td> {{ project.name }} </td>
+                        <td>
+                            <form action="projects/{{project.id}}">
+                                <button type="submit">View Project</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+            </table>
         <p> Completed Projects</p>
-            <ul>
+            <table>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Details</th>
+                </tr>
                 {% for project in project_list2 %}
-                    <li>{{ project.name }}</li>
-                    <form action="projects/{{project.id}}">
-                        <button type="submit">view project</button>
-                    </form>
-                {% endfor %}
-            </ul>
+                <tr>
+                        <td> {{ project.name }} </td>
+                        <td>
+                            <form action="projects/{{project.id}}">
+                                <button type="submit">View Project</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+            </table>
 
     </body>
 </html>
