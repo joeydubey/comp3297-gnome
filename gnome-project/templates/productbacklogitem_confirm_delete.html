@@ -12,7 +12,11 @@
     <body>
         <form method="post">{% csrf_token %}
             <p>Are you sure you want to delete "{{ object }}"?</p>
-            <input type="submit" value="Confirm">
+            <button type="submit"
+                    value="confirm"
+                    class="btn btn-default">
+                Confirm
+            </button>
         </form>
     </body>
 </html>

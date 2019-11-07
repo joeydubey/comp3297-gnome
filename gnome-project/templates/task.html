@@ -23,18 +23,23 @@
                 Delete
             </button>
         </p>
-        <ul> <li>
-                Description: {{task.description}}
-            </li>
-            <li>
-                Estimated Effort Hours: {{task.estimatedEffortHours}}
-            </li>
-            <li>
-                Actual Effort Hours: {{task.actualEffortHours}}
-            </li>
-            <li>
-                Status: {{task.status}}
-            </li>
-        </ul>
+        <table>
+            <tr>
+                <td><b>Description</b></td>
+                <td> {{task.description}} </td>
+            </tr>
+            <tr>
+                <td><b>Etimated Effort Hours</b></td>
+                <td> {{task.estimatedEffortHours}} </td>
+            </tr>
+            <tr>
+                <td><b>Actual Effort Hours</b></td>
+                <td> {{task.actualEffortHours}} </td>
+            </tr>
+            <tr>
+                <td><b>Status</b></td>
+                <td> {{task.status}} </td>
+            </tr>
+        </table>
     </body>
 </html>
