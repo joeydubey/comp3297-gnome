@@ -22,7 +22,7 @@
         </p>
         <script>
         function showHide() {
-            if (document.getElementById("showHideButton").innerHTML == "Show") {
+            if (document.getElementById("showHideButton").innerHTML != "Hide") {
                 document.getElementById("showHideButton").innerHTML = "Hide";
                 document.getElementById("completedSprints").style.display = "block";
             }
@@ -46,6 +46,9 @@
                         <th>Tasks Not Yet Started</th>
                         <th>Tasks In Progress</th>
                         <th>Tasks Completed</th>
+                        <th>Estimated Effort Hours</th>
+                        <th>Actual Effort Hours</th>
+                        <th>Work Remaining</th>
                     </tr>
                     {% for pbi in sprint.pbiList %}
                     <tr>
@@ -53,7 +56,19 @@
                         <td> {{ pbi.description }} </td>
                         <td></td>
                         <td></td>
-                        <td></td>
+                        <td>
+                            {% for complete in pbi.tasks_complete %}
+                            <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
+                                <button type="submit"
+                                        class="btn btn-default">
+                                    {{ complete.name }}
+                                </button>
+                            </form>
+                            {% endfor %}
+                        </td>
+                        <td> {{ pbi.tasks_cummulative_effort_hours}} </td>
+                        <td> {{ pbi.tasks_actual_effort_hours}} </td>
+                        <td> {{ pbi.tasks_work_remaining}} </td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -67,7 +82,7 @@
         <p> {% if sprint_current == None %}
             <form action="{{project.id}}/{{product_backlog.id}}/create-new-sprint">
                 <button type="submit"
-                        class="btn btn-default btn-lg">
+                        class="btn btn-default">
                     Create New Sprint
                 </button>
             </form>

@@ -40,7 +40,8 @@ table {
 
 td, th {  
 	border: 1px solid #cccccc; /* No more visible border */
-    height: 30px; 
+	height: 30px;
+	padding: 6px;
     transition: all 0.3s;  /* Simple transition for hover effect */
 }
 
