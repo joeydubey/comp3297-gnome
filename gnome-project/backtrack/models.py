@@ -39,6 +39,16 @@ class PBIStatus(Enum):
     def choices(cls):
         return [(key.value, key.name) for key in cls]
 
+class PBIPriority(Enum):
+    VERY_HIGH = 1
+    HIGH = 2
+    NORMAL = 3
+    LOW = 4
+    VERY_LOW = 5
+
+    @classmethod
+    def choices(cls):
+        return [(key.value, key.name) for key in cls]
 
 class TaskStatus(Enum):
     IN_PROGRESS = "in progress"
@@ -84,7 +94,7 @@ class ProductBacklog(models.Model):
         return self.name
 
     def pbiList(self):
-        return ProductBacklogItem.objects.filter(productBacklogID=self.id)
+        return ProductBacklogItem.objects.filter(productBacklogID=self.id).order_by('priority')
 
 class SprintBacklog(models.Model):
     name = models.CharField(max_length=200)
@@ -96,7 +106,7 @@ class SprintBacklog(models.Model):
     
 
     def pbiList(self):
-        return ProductBacklogItem.objects.filter(sprintBacklogID=self.id)
+        return ProductBacklogItem.objects.filter(sprintBacklogID=self.id).order_by('priority')
    
     @property
     def sprint_cummulative_effort_hours(self):
@@ -123,6 +133,7 @@ class ProductBacklogItem(models.Model):
     productBacklogID = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
     sprintBacklogID = models.ForeignKey(SprintBacklog, on_delete=models.CASCADE, blank=True, null=True)
     status = models.CharField(max_length=50, default=PBIStatus.NOT_YET_STARTED.value, choices=PBIStatus.choices())
+    priority = models.IntegerField(blank=True, null=False, default=PBIPriority.NORMAL.value, choices=PBIPriority.choices())
 
     def __str__(self):
         return self.name
@@ -157,9 +168,6 @@ class ProductBacklogItem(models.Model):
     @property
     def tasks_work_remaining(self):
         return self.tasks_cummulative_effort_hours - self.tasks_actual_effort_hours
-    
-    #def addToSprint(self):
-
 
 class Task(models.Model):
     name = models.CharField(max_length=200)

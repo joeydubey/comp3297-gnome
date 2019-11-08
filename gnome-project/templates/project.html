@@ -74,10 +74,14 @@
                     {% endfor %}
                 </table>
                 {% else %}
-                <p>This sprint is empty.</p>
+                <div>
+                    This sprint is empty.
+                </div>
                 {% endif %}
                 {% empty %}
-                <p>No sprints completed yet.</p>
+                <div>
+                    No sprints completed yet.
+                </div>
                 {% endfor %}
             </ul>
         </div>
@@ -164,7 +168,9 @@
                 {% endfor %}
             </table>
             {% else %}
-            <p>This sprint is empty.</p>
+            <div>
+                This sprint is empty.
+            </div>
             {% endif %}
             {% endif %}
         </p>
@@ -188,6 +194,7 @@
                 <th>Description</th>
                 <th>Story Points</th>
                 <th>Status</th>
+                <th>Priority</th>
             </tr>
             {% for pbi in product_backlog.pbiList %}
             <tr>
@@ -208,11 +215,14 @@
                 <td> {{ pbi.description }} </td>
                 <td> {{ pbi.pointEstimate }} </td>
                 <td> {{ pbi.status }} </td>
+                <td> {{ pbi.priority }} </td>
             </tr>
             {% endfor %}
     </table>
     {% else %}
-    <p>The product backlog is empty.</p>
+    <div>
+        The product backlog is empty.
+    </div>
     {% endif %}
     </body>
 </html>
