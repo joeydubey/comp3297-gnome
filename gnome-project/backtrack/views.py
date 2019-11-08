@@ -45,8 +45,8 @@ class ViewAllProjects(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['project_list1'] = Project.objects.filter(status=ProjectStatus.CURRENT.value)
-        context['project_list2'] = Project.objects.filter(status=ProjectStatus.COMPLETE.value)
+        context['project_list1'] = Project.objects.filter(status=ProjectStatus.CURRENT.name)
+        context['project_list2'] = Project.objects.filter(status=ProjectStatus.COMPLETE.name)
         return context
 
 
@@ -76,7 +76,7 @@ class ViewProject(TemplateView):
         sprint_backlogs = SprintBacklog.objects.filter(productBacklogID=context['product_backlog'].id)
 
         if len(sprint_backlogs) != 0:
-            sprint_list_current = sprint_backlogs.filter(status=SprintStatus.CURRENT.value)
+            sprint_list_current = sprint_backlogs.filter(status=SprintStatus.CURRENT.name)
             print(sprint_list_current)
 
             if len(sprint_list_current) > 1:
@@ -92,8 +92,6 @@ class ViewProject(TemplateView):
 
             context['sprint_list_done'] = sprint_list_done
 
-            #context['pbis_product_backlog_list'] = ProductBacklogItem.objects.filter(productBacklogID=product_backlog.id)
-            context['product_backlog'] = product_backlog
             return context
 
 

@@ -8,7 +8,6 @@
     text-decoration: none;
 }
 body {
-	/*background-color: lightblue;*/
 	background-color: #303030;
 	color: #f1f1f1;
 	font-family: "Trebuchet MS";
@@ -24,6 +23,7 @@ button {
 	background-color: #555555;
 	border: none;
 	color: white;
+	margin: 5px;
 	padding: 6px 12px;
 	border-radius: 2px;
 	text-align: center;
@@ -34,14 +34,14 @@ button {
 table {  
     color: #333;
     font-family: Helvetica, Arial, sans-serif;
-    width: 70%; 
 	border-collapse: collapse;
 	border-spacing: 0; 
 }
 
 td, th {  
-    border: 1px solid #cccccc; /* No more visible border */
-    height: 30px; 
+	border: 1px solid #cccccc; /* No more visible border */
+	height: 30px;
+	padding: 6px;
     transition: all 0.3s;  /* Simple transition for hover effect */
 }
 

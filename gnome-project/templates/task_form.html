@@ -1,12 +1,28 @@
-<body>
-<p>
-    Crate a new Task
-</p>
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save">
-    <form action="projects/{{project.id}}">
-    </form>
-</form>
-</body>
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/template.css' %}">
+        <title>New Task</title>
+        <div class="page-header">
+            <h1 style="text-align: center;"><img width="144" src="{% static 'backtrack.svg' %}" alt="Backtrack"/></h1>
+        </div>
+        <style></style>
+    </head>
+    <body>
+        <p>
+            Create a new Task
+        </p>
+        <form method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit"
+                    value="save"
+                    class="btn btn-default">
+                Save
+            </button>
+            <form action="projects/{{project.id}}">
+            </form>
+        </form>
+    </body>
+</html>
 

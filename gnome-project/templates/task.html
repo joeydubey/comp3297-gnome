@@ -1,36 +1,45 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Task Details</title>
-</head>
-<body>
-    <p> For Product Backlog Item {{task.pbi}} </p>
-    <p> Task {{task.name}}
-        <button type="submit"
-                value="edit"
-                 class="btn btn-default">
-            Edit
-        </button>
-         <button type="submit"
-                 value="delete"
-                 class="btn btn-default">
-            Delete
-        </button>
-    </p>
-    <ul> <li>
-            Description: {{task.description}}
-        </li>
-        <li>
-            Estimated Effort Hours: {{task.estimatedEffortHours}}
-        </li>
-        <li>
-            Actual Effort Hours: {{task.actualEffortHours}}
-        </li>
-        <li>
-            Status: {{task.status}}
-        </li>
-    </ul>
-
-</body>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/template.css' %}">
+        <title>Task Details</title>
+        <div class="page-header">
+            <h1 style="text-align: center;"><img width="144" src="{% static 'backtrack.svg' %}" alt="Backtrack"/></h1>
+        </div>
+        <style></style>
+    </head>
+    <body>
+        <p> For Product Backlog Item {{task.pbi}} </p>
+        <p> Task {{task.name}}
+            <button type="submit"
+                    value="edit"
+                    class="btn btn-default">
+                Edit
+            </button>
+            <button type="submit"
+                    value="delete"
+                    class="btn btn-default">
+                Delete
+            </button>
+        </p>
+        <table>
+            <tr>
+                <td><b>Description</b></td>
+                <td> {{task.description}} </td>
+            </tr>
+            <tr>
+                <td><b>Etimated Effort Hours</b></td>
+                <td> {{task.estimatedEffortHours}} </td>
+            </tr>
+            <tr>
+                <td><b>Actual Effort Hours</b></td>
+                <td> {{task.actualEffortHours}} </td>
+            </tr>
+            <tr>
+                <td><b>Status</b></td>
+                <td> {{task.status}} </td>
+            </tr>
+        </table>
+    </body>
 </html>
