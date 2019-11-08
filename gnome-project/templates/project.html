@@ -39,6 +39,7 @@
                     Sprint {{ sprint.name }} Backlog
                 </li>
                 <br>
+                {% if sprint.pbiList %}
                 <table>
                     <tr>
                         <th>Sprint Backlog Item Name</th>
@@ -72,6 +73,11 @@
                     </tr>
                     {% endfor %}
                 </table>
+                {% else %}
+                <p>This sprint is empty.</p>
+                {% endif %}
+                {% empty %}
+                <p>No sprints completed yet.</p>
                 {% endfor %}
             </ul>
         </div>
@@ -89,6 +95,7 @@
             {% else %}
 
             Current Sprint Backlog {{ sprint_current.name }} &nbsp;&nbsp;&nbsp;&nbsp; <font size="-1.5"> Total Story Points: {{ sprint_current.sprint_cummulative_effort_hours}}</font>&nbsp;&nbsp;&nbsp;&nbsp; <font size="-1.5"> Total Effort Hours: {{ sprint_current.sprint_actual_effort_hours}}</font>&nbsp;&nbsp;&nbsp;&nbsp; <font size="-1.5"> Total Work Remaining: {{ sprint_current.sprint_work_remaining}}</font>
+            {% if sprint_current.pbiList %}
             <table>
                 <tr>
                     <th>Sprint Backlog Item Name</th>
@@ -156,7 +163,10 @@
                 </tr>
                 {% endfor %}
             </table>
-            {% endif%}
+            {% else %}
+            <p>This sprint is empty.</p>
+            {% endif %}
+            {% endif %}
         </p>
 
     <hr>
@@ -171,6 +181,7 @@
         </form>
       </p>
 
+      {% if product_backlog.pbiList %}
       <table>
             <tr>
                 <th>Product Backlog Item Name</th>
@@ -200,5 +211,8 @@
             </tr>
             {% endfor %}
     </table>
+    {% else %}
+    <p>The product backlog is empty.</p>
+    {% endif %}
     </body>
 </html>

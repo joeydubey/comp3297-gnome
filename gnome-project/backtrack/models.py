@@ -114,11 +114,7 @@ class SprintBacklog(models.Model):
 
     @property
     def sprint_work_remaining(self):
-        y = 0 
-        t = self.sprint_cummulative_effort_hours
-        for PBI in self.pbiList():
-            y += PBI.tasks_actual_effort_hours
-        return t - y
+        return self.sprint_cummulative_effort_hours - self.sprint_actual_effort_hours
 
 class ProductBacklogItem(models.Model):
     name = models.CharField(max_length=200)
@@ -161,6 +157,9 @@ class ProductBacklogItem(models.Model):
     @property
     def tasks_work_remaining(self):
         return self.tasks_cummulative_effort_hours - self.tasks_actual_effort_hours
+    
+    #def addToSprint(self):
+
 
 class Task(models.Model):
     name = models.CharField(max_length=200)
