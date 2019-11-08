@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.urls import reverse
 from django.views.generic.list import ListView
-from backtrack.models import Project, ProductBacklog, SprintBacklog, ProjectStatus, SprintStatus, ProductBacklogItem, Task, TaskStatus
+from backtrack.models import Project, ProductBacklog, SprintBacklog, ProjectStatus, SprintStatus, ProductBacklogItem, Task, TaskStatus, PBIStatus, PBIPriority
 import logging
 from django.shortcuts import get_object_or_404
 
@@ -31,7 +31,7 @@ class EditPBI(UpdateView):
 
     model = ProductBacklogItem
     slug_field = "pbi"
-    fields = ['name', 'description', 'pointEstimate', 'status']
+    fields = ['name', 'description', 'pointEstimate', 'status', 'priority']
 
     def get_success_url(self):
         pbi_ID = self.object.id
@@ -45,8 +45,8 @@ class ViewAllProjects(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['project_list1'] = Project.objects.filter(status=ProjectStatus.CURRENT.name)
-        context['project_list2'] = Project.objects.filter(status=ProjectStatus.COMPLETE.name)
+        context['project_list1'] = Project.objects.filter(status=ProjectStatus.CURRENT.value)
+        context['project_list2'] = Project.objects.filter(status=ProjectStatus.COMPLETE.value)
         return context
 
 
@@ -76,7 +76,7 @@ class ViewProject(TemplateView):
         sprint_backlogs = SprintBacklog.objects.filter(productBacklogID=context['product_backlog'].id)
 
         if len(sprint_backlogs) != 0:
-            sprint_list_current = sprint_backlogs.filter(status=SprintStatus.CURRENT.name)
+            sprint_list_current = sprint_backlogs.filter(status=SprintStatus.CURRENT.value)
             print(sprint_list_current)
 
             if len(sprint_list_current) > 1:
@@ -88,7 +88,7 @@ class ViewProject(TemplateView):
             if len(sprint_list_current) == 0:
                 print("create a new sprint")
             
-            sprint_list_done = sprint_backlogs.filter(status=SprintStatus.COMPLETE.name)
+            sprint_list_done = sprint_backlogs.filter(status=SprintStatus.COMPLETE.value)
 
             context['sprint_list_done'] = sprint_list_done
 
