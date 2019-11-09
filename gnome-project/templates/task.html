@@ -12,16 +12,20 @@
     <body>
         <p> For Product Backlog Item {{task.pbi}} </p>
         <p> Task {{task.name}}
+            <form action="task/{{task.id}}">
             <button type="submit"
                     value="edit"
                     class="btn btn-default">
                 Edit
             </button>
-            <button type="submit"
-                    value="delete"
-                    class="btn btn-default">
-                Delete
-            </button>
+            </form>
+            <form action="task/delete-{{task.id}}">
+                <button type="submit"
+                        value="delete"
+                        class="btn btn-default">
+                    Delete
+                </button>
+            </form>
         </p>
         <table>
             <tr>

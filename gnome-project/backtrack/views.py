@@ -39,6 +39,29 @@ class EditPBI(UpdateView):
         project = Project.objects.get(id=pbi.productBacklogID.project_id)
         return reverse('project', args=(project.id,))
 
+class DeleteTask(DeleteView):
+    template_name = "task_confirm_delete.html"
+    model = Task
+    slug_field = 'task'
+
+    def get_success_url(self):
+        pbiID = self.object.pbi.id
+        pbi = ProductBacklogItem.objects.get(id=pbiID)
+        project = Project.objects.get(id=pbi.productBacklogID.project_id)
+        return reverse('project', args=(project.id,))
+
+
+class EditTask(UpdateView):
+    template_name = "task_edit.html"
+    model = Task
+    slug_field = "task"
+    fields = ['name', 'description', 'estimatedEffortHours', 'actualEffortHours', 'status']
+
+    def get_success_url(self):
+        pbiID = self.object.pbi.id
+        pbi = ProductBacklogItem.objects.get(id=pbiID)
+        project = Project.objects.get(id=pbi.productBacklogID.project_id)
+        return reverse('project', args=(project.id,))
 
 class ViewAllProjects(TemplateView):
     template_name = "project_list.html"
@@ -56,7 +79,9 @@ class ViewTask(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         task_id = self.kwargs['task']
-        context['task'] = Task.objects.filter(id=task_id)[0]
+        #context['task'] = Task.objects.filter(id=task_id)[0]
+        task = Task.objects.get(id=task_id)
+        context['task'] = task
         return context
 
 
@@ -142,7 +167,6 @@ class CreateNewSprintView(CreateView):
     template_name = "sprint_form.html"
     model = SprintBacklog
     fields = ['name']
-    print("do you even get here")
 
     def form_valid(self, form):
         product_backlog = get_object_or_404(ProductBacklog, id=self.kwargs['productBacklog'])
@@ -151,8 +175,14 @@ class CreateNewSprintView(CreateView):
 
     def get_success_url(self):
         productBacklogID = self.object.productBacklogID
-        print(productBacklogID)
         productBacklog = ProductBacklog.objects.get(id=productBacklogID.id)
         project = Project.objects.get(id=productBacklog.project.id)
-        print(project)
         return reverse('project', args=(project.id,))
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        productBacklogID = self.kwargs['productBacklog']
+        productBacklog = ProductBacklog.objects.get(id=productBacklogID)
+        context['product_backlog'] = productBacklog
+        context['sprint_backlog'] = self.object
+        return context
