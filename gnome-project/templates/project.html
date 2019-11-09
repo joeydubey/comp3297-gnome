@@ -135,7 +135,7 @@
 
                     <td>
                         {% for in_progress in pbi.tasks_in_progress %}
-                        <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
+                        <form action="product-backlog/{{pbi.id}}/{{in_progress.id}}">
                             <button type="submit"
                                     class="btn btn-default">
                                 {{ in_progress.name }}
@@ -146,7 +146,7 @@
 
                     <td>
                         {% for complete in pbi.tasks_complete %}
-                        <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
+                        <form action="product-backlog/{{pbi.id}}/{{complete.id}}">
                             <button type="submit"
                                     class="btn btn-default">
                                 {{ complete.name }}
@@ -193,10 +193,11 @@
                 <th>Product Backlog Item Name</th>
                 <th>Description</th>
                 <th>Story Points</th>
+                <th>Cumulative Story Points</th>
                 <th>Status</th>
                 <th>Priority</th>
             </tr>
-            {% for pbi in product_backlog.pbiList %}
+            {% for pbi, c_point in pbi_and_cumulative_points %}
             <tr>
                 <td> {{ pbi.name }}
                     <form action="product-backlog/pbi/{{pbi.id}}">
@@ -214,6 +215,13 @@
                 </td>
                 <td> {{ pbi.description }} </td>
                 <td> {{ pbi.pointEstimate }} </td>
+                <td>
+                    {% ifchanged c_point %}
+                        {{ c_point }}
+                    {% else %}
+                        -
+                    {% endifchanged %}
+                </td>
                 <td> {{ pbi.status }} </td>
                 <td> {{ pbi.priority }} </td>
             </tr>

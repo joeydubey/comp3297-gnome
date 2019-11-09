@@ -34,6 +34,7 @@ class PBIStatus(Enum):
     IN_PROGRESS = "in progress"
     COMPLETE = "complete"
     NOT_YET_STARTED = "not yet started"
+    INCOMPLETE = "incomplete"
 
     @classmethod
     def choices(cls):
