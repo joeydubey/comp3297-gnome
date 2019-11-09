@@ -3,7 +3,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="{% static 'css/template.css' %}">
-        <title>Edit PBI</title>
+        <title>Delete Task</title>
         <div class="page-header">
             <h1 style="text-align: center;"><img width="144" src="{% static 'backtrack.svg' %}" alt="Backtrack"/></h1>
         </div>
@@ -11,11 +11,11 @@
     </head>
     <body>
         <form method="post">{% csrf_token %}
-            {{ form.as_p }}
+            <p>Are you sure you want to delete "{{ object }}"?</p>
             <button type="submit"
-                    value="update"
+                    value="confirm"
                     class="btn btn-default">
-                Update
+                Confirm
             </button>
         </form>
     </body>
