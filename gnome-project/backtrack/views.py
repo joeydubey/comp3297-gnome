@@ -202,3 +202,16 @@ class CreateNewSprintView(CreateView):
         context['product_backlog'] = productBacklog
         context['sprint_backlog'] = self.object
         return context
+
+class UpdateSprintState(UpdateView):
+    template_name = "updateSprint.html"
+
+    model = SprintBacklog
+    slug_field = "sprint"
+    fields = ['name', 'status']
+
+    def get_success_url(self):
+        pbi_ID = self.object.id
+        pbi = ProductBacklogItem.objects.get(id=pbi_ID)
+        project = Project.objects.get(id=pbi.productBacklogID.project_id)
+        return reverse('project', args=(project.id,))

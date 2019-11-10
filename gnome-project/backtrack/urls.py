@@ -14,4 +14,6 @@ urlpatterns = [path('projects', views.ViewAllProjects.as_view(), name='projects'
                path('projects/<int:project>/<int:SprintBacklog>/<int:pbi>/create-new-task', views.CreateNewTaskView.as_view(), name='newTASK'),
                path('projects/<int:project>/<int:productBacklog>/create-new-sprint', views.CreateNewSprintView.as_view(), name='newSprint'),
 
+               path('projects/<int:project>/update-sprint/<int:pk>', views.UpdateSprintState.as_view(), name='UpdateSprintState'),
+
                ]
