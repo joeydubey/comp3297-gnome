@@ -79,7 +79,6 @@ class ViewTask(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         task_id = self.kwargs['task']
-        #context['task'] = Task.objects.filter(id=task_id)[0]
         task = Task.objects.get(id=task_id)
         context['task'] = task
         return context
@@ -116,6 +115,21 @@ class ViewProject(TemplateView):
             sprint_list_done = sprint_backlogs.filter(status=SprintStatus.COMPLETE.value)
 
             context['sprint_list_done'] = sprint_list_done
+
+            pbiList = product_backlog_list[0].pbiList()
+            completedPbiList = pbiList.filter(status=PBIStatus.COMPLETE.value)
+
+            cumulativePoints = []
+            cumulativeCounter = 0
+            
+            for pbi in pbiList:
+                if (pbi.status != PBIStatus.COMPLETE.value):
+                    cumulativeCounter += pbi.pointEstimate
+                cumulativePoints.append(cumulativeCounter)
+
+            pbiWithCumulative = zip(pbiList, cumulativePoints)
+            context['pbi_and_cumulative_points'] = pbiWithCumulative
+            context['completed_pbi_list'] = completedPbiList
 
             return context
 

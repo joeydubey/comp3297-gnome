@@ -135,7 +135,7 @@
 
                     <td>
                         {% for in_progress in pbi.tasks_in_progress %}
-                        <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
+                        <form action="product-backlog/{{pbi.id}}/{{in_progress.id}}">
                             <button type="submit"
                                     class="btn btn-default">
                                 {{ in_progress.name }}
@@ -146,7 +146,7 @@
 
                     <td>
                         {% for complete in pbi.tasks_complete %}
-                        <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
+                        <form action="product-backlog/{{pbi.id}}/{{complete.id}}">
                             <button type="submit"
                                     class="btn btn-default">
                                 {{ complete.name }}
@@ -178,25 +178,50 @@
     <hr>
 
     <!-- Product Backlog-->
-      <p> Product Backlog
-          <form action="{{project.id}}/{{product_backlog.id}}/create-new-pbi">
-           <button type="submit"
+    <p> Product Backlog
+        <form action="{{project.id}}/{{product_backlog.id}}/create-new-pbi">
+            <button type="submit"
                     class="btn btn-default">
                 Add Product Backlog Item
             </button>
         </form>
-      </p>
-
-      {% if product_backlog.pbiList %}
-      <table>
+    </p>
+        <button type="button"
+                    id="showHideCompletedPBIsButton"
+                    onclick="showHideCompletedPBIs()"
+                    class="btn btn-default">
+                Show Completed PBIs
+        </button>
+        <script>
+        function showHideCompletedPBIs() {
+            var completedPbiList = document.getElementsByClassName("completedPBI");
+            var i;
+            if (document.getElementById("showHideCompletedPBIsButton").innerHTML != "Hide Completed PBIs") {
+                document.getElementById("showHideCompletedPBIsButton").innerHTML = "Hide Completed PBIs";
+                for (i = 0; i < completedPbiList.length; i++) {
+                    completedPbiList[i].style.display = "";
+                }
+            }
+            else {
+                document.getElementById("showHideCompletedPBIsButton").innerHTML = "Show Completed PBIs";
+                for (i = 0; i < completedPbiList.length; i++) {
+                    completedPbiList[i].style.display = "none";
+                }
+            }
+        }
+        </script>
+        {% if product_backlog.pbiList %}
+        <table>
             <tr>
                 <th>Product Backlog Item Name</th>
                 <th>Description</th>
                 <th>Story Points</th>
+                <th>Cumulative Story Points</th>
                 <th>Status</th>
                 <th>Priority</th>
             </tr>
-            {% for pbi in product_backlog.pbiList %}
+            {% for pbi, c_point in pbi_and_cumulative_points %}
+            {% if pbi not in completed_pbi_list %}
             <tr>
                 <td> {{ pbi.name }}
                     <form action="product-backlog/pbi/{{pbi.id}}">
@@ -214,9 +239,33 @@
                 </td>
                 <td> {{ pbi.description }} </td>
                 <td> {{ pbi.pointEstimate }} </td>
+                <td> {{c_point }} </td>
                 <td> {{ pbi.status }} </td>
                 <td> {{ pbi.priority }} </td>
             </tr>
+            {% else %}
+            <tr class="completedPBI" style="display: none;">
+                <td> {{ pbi.name }}
+                    <form action="product-backlog/pbi/{{pbi.id}}">
+                        <button type="submit"
+                               class="btn btn-default">
+                            edit
+                        </button>
+                    </form>
+                    <form action="product-backlog/pbi/delete-{{pbi.id}}">
+                        <button type="submit"
+                                class="btn btn-default">
+                            delete
+                        </button>
+                    </form>
+                </td>
+                <td> {{ pbi.description }} </td>
+                <td> {{ pbi.pointEstimate }} </td>
+                <td>-</td>
+                <td> {{ pbi.status }} </td>
+                <td> {{ pbi.priority }} </td>
+            </tr>
+            {% endif %}
             {% endfor %}
     </table>
     {% else %}
