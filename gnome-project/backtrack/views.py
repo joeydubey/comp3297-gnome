@@ -210,8 +210,31 @@ class UpdateSprintState(UpdateView):
     slug_field = "sprint"
     fields = ['name', 'status']
 
+    #if self.status==CURRENT.value :
+    #    self.status = COMPLETE.value
+    #elif self.status==NOTYETSTARTED.value :
+    #    self.status = CURRENT.value
+
+    #def get_context_data(self, **kwargs):
+    #    context = super().get_context_data(**kwargs)
+    #    sprint_id = self.kwargs['sprint']
+    #    sprint = SprintBacklog.objects.get(id=sprint_id)
+    #    SprintBacklog.objects.filter(pk=sprint_id).update(status="complete")
+    #    context['sprint'] = sprint
+    #    return context
+
     def get_success_url(self):
-        pbi_ID = self.object.id
-        pbi = ProductBacklogItem.objects.get(id=pbi_ID)
-        project = Project.objects.get(id=pbi.productBacklogID.project_id)
+        productBacklogID = self.object.productBacklogID
+        productBacklog = ProductBacklog.objects.get(id=productBacklogID.id)
+        project = Project.objects.get(id=productBacklog.project.id)
         return reverse('project', args=(project.id,))
+
+class ViewTask(TemplateView):
+    template_name = 'task.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        task_id = self.kwargs['task']
+        task = Task.objects.get(id=task_id)
+        context['task'] = task
+        return context
