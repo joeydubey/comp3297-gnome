@@ -22,6 +22,7 @@ class ProjectStatus(Enum):
 
 
 class SprintStatus(Enum):
+    NOTYETSTARTED = "not yet started"
     CURRENT = "current"
     COMPLETE = "complete"
 
@@ -104,21 +105,21 @@ class SprintBacklog(models.Model):
 
     def __str__(self):
         return self.name
-    
+
 
     def pbiList(self):
         return ProductBacklogItem.objects.filter(sprintBacklogID=self.id).order_by('priority')
-   
+
     @property
     def sprint_cummulative_effort_hours(self):
-        x = 0 
+        x = 0
         for PBI in self.pbiList():
             x += PBI.tasks_cummulative_effort_hours
         return x
 
     @property
     def sprint_actual_effort_hours(self):
-        x = 0 
+        x = 0
         for PBI in self.pbiList():
             x += PBI.tasks_actual_effort_hours
         return x
@@ -150,10 +151,10 @@ class ProductBacklogItem(models.Model):
 
     def tasks_not_yet_started(self):
         return Task.objects.filter(pbi=self.pk, status=TaskStatus.NOT_YET_STARTED.value)
-    
+
     @property
     def tasks_cummulative_effort_hours(self):
-        x = 0 
+        x = 0
         for Task in self.tasks():
             if (type(Task.estimatedEffortHours) is float):
                 x += Task.estimatedEffortHours
@@ -161,7 +162,7 @@ class ProductBacklogItem(models.Model):
 
     @property
     def tasks_actual_effort_hours(self):
-        x = 0 
+        x = 0
         for Task in self.tasks():
             if (type(Task.actualEffortHours) is float):
                 x += Task.actualEffortHours
@@ -182,4 +183,3 @@ class Task(models.Model):
         return self.name
     def tasks_estimated_effort_hours(self):
         return self.estimatedEffortHours
-
