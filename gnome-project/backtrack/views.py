@@ -117,6 +117,7 @@ class ViewProject(TemplateView):
             context['sprint_list_done'] = sprint_list_done
 
             pbiList = product_backlog_list[0].pbiList()
+            completedPbiList = pbiList.filter(status=PBIStatus.COMPLETE.value)
 
             cumulativePoints = []
             cumulativeCounter = 0
@@ -128,6 +129,7 @@ class ViewProject(TemplateView):
 
             pbiWithCumulative = zip(pbiList, cumulativePoints)
             context['pbi_and_cumulative_points'] = pbiWithCumulative
+            context['completed_pbi_list'] = completedPbiList
 
             return context
 
