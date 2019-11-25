@@ -11,6 +11,16 @@
         <style></style>
     </head>
     <body>
+
+    <!--Create New Sprint -->
+
+    <form action="{{project.id}}/create-new-sprint">
+        <button type="submit"
+            class="btn btn-default">
+            Create New Sprint
+        </button>
+    </form>
+
     <!--Completed sprints-->
         <p> Completed Sprint Backlogs
             <button type="button"
@@ -87,6 +97,84 @@
         </div>
 
     <hr>
+
+
+    <!--Not yet started sprints-->
+        <p> Not Yet Started Sprint Backlogs
+            <button type="button"
+                    id="showHideButtonNotStarted"
+                    onclick="showHideNoStartedSprint()"
+                    class="btn btn-default">
+                Show
+            </button>
+        </p>
+        <script>
+        function showHideNoStartedSprint() {
+            if (document.getElementById("showHideButtonNotStarted").innerHTML != "Hide") {
+                document.getElementById("showHideButtonNotStarted").innerHTML = "Hide";
+                document.getElementById("notStartedYetSprints").style.display = "block";
+            }
+            else {
+                document.getElementById("showHideButtonNotStarted").innerHTML = "Show";
+                document.getElementById("notStartedYetSprints").style.display = "none";
+            }
+        }
+        </script>
+        <div id="notStartedYetSprints" style="display: none;">
+        <!-- not yet started sprints code-->
+            <ul> {% for sprint in sprint_list_not_yet_started %}
+                <li>
+                    Sprint {{ sprint.name }} Backlog
+                </li>
+                <br>
+                {% if sprint.pbiList %}
+                <table>
+                    <tr>
+                        <th>Sprint Backlog Item Name</th>
+                        <th>Description</th>
+                        <th>Tasks Not Yet Started</th>
+                        <th>Tasks In Progress</th>
+                        <th>Tasks Completed</th>
+                        <th>Estimated Effort Hours</th>
+                        <th>Actual Effort Hours</th>
+                        <th>Work Remaining</th>
+                    </tr>
+                    {% for pbi in sprint.pbiList %}
+                    <tr>
+                        <td> {{ pbi.name }} </td>
+                        <td> {{ pbi.description }} </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            {% for complete in pbi.tasks_complete %}
+                            <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
+                                <button type="submit"
+                                        class="btn btn-default">
+                                    {{ complete.name }}
+                                </button>
+                            </form>
+                            {% endfor %}
+                        </td>
+                        <td> {{ pbi.tasks_cummulative_effort_hours}} </td>
+                        <td> {{ pbi.tasks_actual_effort_hours}} </td>
+                        <td> {{ pbi.tasks_work_remaining}} </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% else %}
+                <div>
+                    This sprint is empty.
+                </div>
+                {% endif %}
+                {% empty %}
+                <div>
+                    No sprints not started yet.
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+
+<hr>
 
         <!-- Current Sprint-->
         <p> {% if sprint_current == None %}
