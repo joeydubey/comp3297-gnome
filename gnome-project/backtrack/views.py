@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.urls import reverse
 from django.views.generic.list import ListView
-from backtrack.models import Project, ProductBacklog, SprintBacklog, ProjectStatus, SprintStatus, ProductBacklogItem, Task, TaskStatus, PBIStatus, PBIPriority
+from backtrack.models import Project, ProductBacklog, SprintBacklog, ProjectStatus, SprintStatus, ProductBacklogItem, Task, TaskStatus, PBIStatus, PBIPriority, User
 import logging
 from django.shortcuts import get_object_or_404
 
@@ -12,6 +12,18 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 # Create your views here.
 
 logging.basicConfig(level=logging.DEBUG)
+
+
+class BackTrackHome(CreateView):
+    template_name = "home.html"
+    model = User
+    fields = ['usere', 'password']
+
+    def get_success_url(self):
+        username = self.object.id
+        pbi = ProductBacklogItem.objects.get(id=pbi_ID)
+        project = Project.objects.get(id=pbi.productBacklogID.project_id)
+        return reverse('project', args=(project.id,))
 
 
 class DeletePBI(DeleteView):
@@ -39,6 +51,7 @@ class EditPBI(UpdateView):
         project = Project.objects.get(id=pbi.productBacklogID.project_id)
         return reverse('project', args=(project.id,))
 
+
 class DeleteTask(DeleteView):
     template_name = "task_confirm_delete.html"
     model = Task
@@ -62,6 +75,7 @@ class EditTask(UpdateView):
         pbi = ProductBacklogItem.objects.get(id=pbiID)
         project = Project.objects.get(id=pbi.productBacklogID.project_id)
         return reverse('project', args=(project.id,))
+
 
 class ViewAllProjects(TemplateView):
     template_name = "project_list.html"

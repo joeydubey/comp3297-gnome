@@ -3,6 +3,7 @@ from backtrack import views
 
 
 urlpatterns = [path('projects', views.ViewAllProjects.as_view(), name='projects'),
+               path('', views.BackTrackHome.as_view(), name='homePage'),
                path('projects/<int:project>', views.ViewProject.as_view(), name='project'),
                path('projects/create-new-project', views.CreateNewProjectView.as_view(), name='newProject'),
                path('projects/product-backlog/<int:pbi>/<int:task>', views.ViewTask.as_view(), name='task'),

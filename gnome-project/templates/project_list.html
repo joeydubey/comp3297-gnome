@@ -11,6 +11,8 @@
         <style></style>
     </head>
     <body>
+    {% block content %}
+    {% if user.is_authenticated %}
         <form action="projects/create-new-project">
             <button type="submit">Create New Project</button>
         </form>
@@ -50,4 +52,9 @@
             </table>
 
     </body>
+    {%else%}
+        <p>You are not logged in</p>
+        <a href="{% url 'login' %}">login</a>
+    {% endif %}
+    {% endblock %}
 </html>
