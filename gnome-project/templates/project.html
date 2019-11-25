@@ -14,7 +14,7 @@
 
     <!--Create New Sprint -->
 
-    <form action="{{project.id}}/create-new-sprint">
+    <form action="{{project.id}}/{{product_backlog.id}}/create-new-sprint">
         <button type="submit"
             class="btn btn-default">
             Create New Sprint
@@ -69,7 +69,7 @@
                         <td></td>
                         <td>
                             {% for complete in pbi.tasks_complete %}
-                            <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
+                            <form action="product-backlog/{{pbi.id}}/{{complete.id}}">
                                 <button type="submit"
                                         class="btn btn-default">
                                     {{ complete.name }}
@@ -126,6 +126,12 @@
                 <li>
                     Sprint {{ sprint.name }} Backlog
                 </li>
+                <form action="product-backlog/sprint-backlog/{{sprint.id}}">
+                    <button type="submit"
+                            class="btn btn-default">
+                                edit sprint status
+                    </button>
+                </form>
                 <br>
                 {% if sprint.pbiList %}
                 <table>
@@ -141,13 +147,38 @@
                     </tr>
                     {% for pbi in sprint.pbiList %}
                     <tr>
-                        <td> {{ pbi.name }} </td>
+                        <td> {{ pbi.name }}
+                            <form action="{{project.id}}/{{sprint_current.id}}/{{pbi.id}}/create-new-task">
+                                <button type="submit"
+                                        class="btn btn-default">
+                                Add Task
+                                </button>
+                            </form>
+                        </td>
                         <td> {{ pbi.description }} </td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            {% for not_yet_started in pbi.tasks_not_yet_started %}
+                            <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
+                                <button type="submit"
+                                        class="btn btn-default">
+                                    {{ not_yet_started.name }}
+                                </button>
+                            </form>
+                        {% endfor %}
+                        </td>
+                        <td>
+                            {% for in_progress in pbi.tasks_in_progress %}
+                            <form action="product-backlog/{{pbi.id}}/{{in_progress.id}}">
+                                <button type="submit"
+                                        class="btn btn-default">
+                                    {{ in_progress.name }}
+                                </button>
+                            </form>
+                            {% endfor %}
+                        </td>
                         <td>
                             {% for complete in pbi.tasks_complete %}
-                            <form action="product-backlog/{{pbi.id}}/{{not_yet_started.id}}">
+                            <form action="product-backlog/{{pbi.id}}/{{complete.id}}">
                                 <button type="submit"
                                         class="btn btn-default">
                                     {{ complete.name }}
@@ -187,6 +218,14 @@
             {% else %}
 
             Current Sprint Backlog {{ sprint_current.name }} &nbsp;&nbsp;&nbsp;&nbsp; <font size="-1.5"> Total Story Points: {{ sprint_current.sprint_cummulative_effort_hours}}</font>&nbsp;&nbsp;&nbsp;&nbsp; <font size="-1.5"> Total Effort Hours: {{ sprint_current.sprint_actual_effort_hours}}</font>&nbsp;&nbsp;&nbsp;&nbsp; <font size="-1.5"> Total Work Remaining: {{ sprint_current.sprint_work_remaining}}</font>
+
+            <form action="product-backlog/sprint-backlog/{{sprint_current.id}}">
+                <button type="submit"
+                        class="btn btn-default">
+                            edit sprint status
+                </button>
+            </form>
+
             {% if sprint_current.pbiList %}
             <table>
                 <tr>

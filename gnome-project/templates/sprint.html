@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/template.css' %}">
+        <title>Edit Sprint Backlog</title>
+        <div class="page-header">
+            <h1 style="text-align: center;"><img width="144" src="{% static 'backtrack.svg' %}" alt="Backtrack"/></h1>
+        </div>
+        <style></style>
+    </head>
+    <body>
+        <form method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit"
+                    value="update"
+                    class="btn btn-default">
+                Update
+            </button>
+        </form>
+    </body>
+</html>

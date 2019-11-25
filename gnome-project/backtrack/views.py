@@ -52,6 +52,20 @@ class EditPBI(UpdateView):
         return reverse('project', args=(project.id,))
 
 
+class EditSprintbacklog(UpdateView):
+    template_name = "sprint.html"
+
+    model = SprintBacklog
+    slug_field = "sprint"
+    fields = ['name', 'status']
+
+    def get_success_url(self):
+        sprint_ID = self.object.id
+        sprint = SprintBacklog.objects.get(id=sprint_ID)
+        project = Project.objects.get(id=sprint.productBacklogID.project_id)
+        return reverse('project', args=(project.id,))
+
+
 class DeleteTask(DeleteView):
     template_name = "task_confirm_delete.html"
     model = Task
