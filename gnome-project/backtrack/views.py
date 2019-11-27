@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.DEBUG)
 class BackTrackHome(CreateView):
     template_name = "home.html"
     model = User
-    fields = ['usere', 'password']
+    fields = ['user', 'password']
 
     def get_success_url(self):
         username = self.object.id
