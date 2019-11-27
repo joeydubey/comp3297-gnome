@@ -13,7 +13,7 @@
         <p>
             Create a new PBI:
         </p>
-        <form method="get">{% csrf_token %}
+        <form method="post">{% csrf_token %}
             {{ form.as_p }}
             <button type="submit"
                     value="save"
