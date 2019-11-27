@@ -24,6 +24,7 @@ class ProjectStatus(Enum):
 class SprintStatus(Enum):
     CURRENT = "current"
     COMPLETE = "complete"
+    NOTYETSTARTED = "not yet started"
 
     @classmethod
     def choices(cls):
@@ -94,31 +95,38 @@ class ProductBacklog(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        is_new = True if not self.id else False
+        super(ProductBacklog, self).save(*args, **kwargs)
+        if is_new:
+            sprint_backlog = SprintBacklog(name=self.name+" sprint0", productBacklogID=self)
+            sprint_backlog.save()
+
     def pbiList(self):
         return ProductBacklogItem.objects.filter(productBacklogID=self.id).order_by('priority')
 
 class SprintBacklog(models.Model):
     name = models.CharField(max_length=200)
-    status = models.CharField(max_length=200, default=SprintStatus.CURRENT.value, choices=SprintStatus.choices())
+    status = models.CharField(max_length=200, default=SprintStatus.NOTYETSTARTED.value, choices=SprintStatus.choices())
     productBacklogID = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
-    
+
 
     def pbiList(self):
         return ProductBacklogItem.objects.filter(sprintBacklogID=self.id).order_by('priority')
-   
+
     @property
     def sprint_cummulative_effort_hours(self):
-        x = 0 
+        x = 0
         for PBI in self.pbiList():
             x += PBI.tasks_cummulative_effort_hours
         return x
 
     @property
     def sprint_actual_effort_hours(self):
-        x = 0 
+        x = 0
         for PBI in self.pbiList():
             x += PBI.tasks_actual_effort_hours
         return x
@@ -130,7 +138,7 @@ class SprintBacklog(models.Model):
 class ProductBacklogItem(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=500)
-    pointEstimate = models.IntegerField(blank=True, null=True)
+    pointEstimate = models.IntegerField(blank=True, null=True, default=1)
     productBacklogID = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
     sprintBacklogID = models.ForeignKey(SprintBacklog, on_delete=models.CASCADE, blank=True, null=True)
     status = models.CharField(max_length=50, default=PBIStatus.NOT_YET_STARTED.value, choices=PBIStatus.choices())
@@ -150,10 +158,10 @@ class ProductBacklogItem(models.Model):
 
     def tasks_not_yet_started(self):
         return Task.objects.filter(pbi=self.pk, status=TaskStatus.NOT_YET_STARTED.value)
-    
+
     @property
     def tasks_cummulative_effort_hours(self):
-        x = 0 
+        x = 0
         for Task in self.tasks():
             if (type(Task.estimatedEffortHours) is float):
                 x += Task.estimatedEffortHours
@@ -161,7 +169,7 @@ class ProductBacklogItem(models.Model):
 
     @property
     def tasks_actual_effort_hours(self):
-        x = 0 
+        x = 0
         for Task in self.tasks():
             if (type(Task.actualEffortHours) is float):
                 x += Task.actualEffortHours
@@ -182,4 +190,3 @@ class Task(models.Model):
         return self.name
     def tasks_estimated_effort_hours(self):
         return self.estimatedEffortHours
-

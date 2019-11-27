@@ -52,6 +52,20 @@ class EditPBI(UpdateView):
         return reverse('project', args=(project.id,))
 
 
+class EditSprintbacklog(UpdateView):
+    template_name = "sprint.html"
+
+    model = SprintBacklog
+    slug_field = "sprint"
+    fields = ['name', 'status']
+
+    def get_success_url(self):
+        sprint_ID = self.object.id
+        sprint = SprintBacklog.objects.get(id=sprint_ID)
+        project = Project.objects.get(id=sprint.productBacklogID.project_id)
+        return reverse('project', args=(project.id,))
+
+
 class DeleteTask(DeleteView):
     template_name = "task_confirm_delete.html"
     model = Task
@@ -125,17 +139,19 @@ class ViewProject(TemplateView):
 
             if len(sprint_list_current) == 0:
                 print("create a new sprint")
-            
+
             sprint_list_done = sprint_backlogs.filter(status=SprintStatus.COMPLETE.value)
+            sprint_list_not_yet_started = sprint_backlogs.filter(status=SprintStatus.NOTYETSTARTED.value)
 
             context['sprint_list_done'] = sprint_list_done
+            context['sprint_list_not_yet_started'] = sprint_list_not_yet_started
 
             pbiList = product_backlog_list[0].pbiList()
             completedPbiList = pbiList.filter(status=PBIStatus.COMPLETE.value)
 
             cumulativePoints = []
             cumulativeCounter = 0
-            
+
             for pbi in pbiList:
                 if (pbi.status != PBIStatus.COMPLETE.value):
                     cumulativeCounter += pbi.pointEstimate
@@ -206,7 +222,7 @@ class CreateNewSprintView(CreateView):
         productBacklog = ProductBacklog.objects.get(id=productBacklogID.id)
         project = Project.objects.get(id=productBacklog.project.id)
         return reverse('project', args=(project.id,))
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         productBacklogID = self.kwargs['productBacklog']
