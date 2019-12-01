@@ -11,6 +11,8 @@
         <style></style>
     </head>
     <body>
+    {% block content %}
+    {% if user.is_authenticated %}
 
     <!--Create New Sprint -->
 
@@ -401,4 +403,9 @@
     </div>
     {% endif %}
     </body>
+    {%else%}
+        <p>You are not logged in</p>
+        <a href="{% url 'login' %}">login</a>
+    {% endif %}
+    {% endblock %}
 </html>
