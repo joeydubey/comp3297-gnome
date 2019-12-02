@@ -157,6 +157,12 @@ class ViewProject(TemplateView):
                     cumulativeCounter += pbi.pointEstimate
                 cumulativePoints.append(cumulativeCounter)
 
+            for s in sprint_list_current:
+                pbiList.filter(sprintBacklogID=s.id).update(status=PBIStatus.IN_PROGRESS.value)
+
+            for s in sprint_list_done:
+                pbiList.filter(sprintBacklogID=s.id).update(status=PBIStatus.COMPLETE.value)
+
             pbiWithCumulative = zip(pbiList, cumulativePoints)
             context['pbi_and_cumulative_points'] = pbiWithCumulative
             context['completed_pbi_list'] = completedPbiList
