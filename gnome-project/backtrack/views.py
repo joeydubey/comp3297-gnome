@@ -30,7 +30,11 @@ class VelocityChart(TemplateView):
         go.Bar(name='Actual Hours', x=name, y=actual),
         go.Bar(name='Estimated Hours', x=name, y=estimated)
         ])
-        graph_holder.update_layout(barmode='group')
+        graph_holder.update_layout(
+            barmode='group',
+            xaxis_title="Completed Sprint",
+            yaxis_title="Story Points"
+            )
         my_graph= opy.plot(graph_holder, auto_open=False, output_type='div')
         context['graph'] = my_graph
         return context
