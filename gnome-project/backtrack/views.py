@@ -40,17 +40,6 @@ class VelocityChart(TemplateView):
         return context
 
 
-class BackTrackHome(CreateView):
-    template_name = "home.html"
-    model = User
-    fields = ['usere', 'password']
-
-    def get_success_url(self):
-        username = self.object.id
-        pbi = ProductBacklogItem.objects.get(id=pbi_ID)
-        project = Project.objects.get(id=pbi.productBacklogID.project_id)
-        return reverse('project', args=(project.id,))
-
 class DeletePBI(DeleteView):
     template_name = "productbacklogitem_confirm_delete.html"
     model = ProductBacklogItem
