@@ -5,7 +5,13 @@
         <link rel="stylesheet" href="{% static 'css/template.css' %}">
         <title>Edit Task</title>
         <div class="page-header">
-            <h1 style="text-align: center;"><img width="144" src="{% static 'backtrack.svg' %}" alt="Backtrack"/></h1>
+            <h1 style="text-align: center;"><img width="144" src="{% static 'backtrack.svg' %}" alt="Backtrack"/>
+            </h1>
+            <h2>Logged in as {{ user }}
+                <form action="/">
+                    <button type="submit">Logout</button>
+                </form>
+            </h2>
         </div>
         <style></style>
     </head>
