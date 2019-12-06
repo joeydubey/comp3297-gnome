@@ -86,7 +86,38 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+   
+    def get_absolute_url(self):
+       return reverse("home",kwargs={"id": self.id})
 
+    @property
+    #returns all completed sprints
+    def all_sprints(self):
+        holder = ProductBacklog.objects.get(project=self.id)
+        return SprintBacklog.objects.filter(productBacklogID=holder.id,status=SprintStatus.COMPLETE.value)
+    
+    #fills lists with all the names of completed sprints 
+    @property
+    def velocity_chart_names(self):
+        holder = []
+        for Sprint in self.all_sprints:
+            holder.append(Sprint.name)
+        return holder
+    #fills list with estimated hours for completed sprints
+    @property
+    def velocity_chart_actual(self):
+        holder = []
+        for Sprint in self.all_sprints:
+            holder.append(Sprint.sprint_actual_effort_hours)
+        return holder
+
+    #fills list with actual hours for completed sprints
+    @property
+    def velocity_chart_estimated(self):
+        holder = []
+        for Sprint in self.all_sprints:
+            holder.append(Sprint.sprint_cummulative_effort_hours)
+        return holder
 
 class ProductBacklog(models.Model):
     name = models.CharField(max_length=200)

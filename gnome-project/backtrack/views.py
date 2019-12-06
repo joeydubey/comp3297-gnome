@@ -5,13 +5,35 @@ from django.views.generic.list import ListView
 from backtrack.models import Project, ProductBacklog, SprintBacklog, ProjectStatus, SprintStatus, ProductBacklogItem, Task, TaskStatus, PBIStatus, PBIPriority, User
 import logging
 from django.shortcuts import get_object_or_404
-
+import plotly.offline as opy
+import plotly.graph_objs as go
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # Create your views here.
 
 logging.basicConfig(level=logging.DEBUG)
+
+class VelocityChart(TemplateView):
+    template_name = 'velocity_chart.html'
+    model = Project
+
+    def get_context_data(self, **kwargs):
+        project_id = self.kwargs['project']
+        context = super().get_context_data(**kwargs)
+        project = Project.objects.filter(id=project_id)[0]
+        name = project.velocity_chart_names
+        estimated = project.velocity_chart_estimated
+        actual = project.velocity_chart_actual
+        context['project'] = project
+        graph_holder = go.Figure(data=[
+        go.Bar(name='Actual Hours', x=name, y=actual),
+        go.Bar(name='Estimated Hours', x=name, y=estimated)
+        ])
+        graph_holder.update_layout(barmode='group')
+        my_graph= opy.plot(graph_holder, auto_open=False, output_type='div')
+        context['graph'] = my_graph
+        return context
 
 
 class BackTrackHome(CreateView):
@@ -24,7 +46,8 @@ class BackTrackHome(CreateView):
         pbi = ProductBacklogItem.objects.get(id=pbi_ID)
         project = Project.objects.get(id=pbi.productBacklogID.project_id)
         return reverse('project', args=(project.id,))
-
+    
+    
 
 class DeletePBI(DeleteView):
     template_name = "productbacklogitem_confirm_delete.html"
