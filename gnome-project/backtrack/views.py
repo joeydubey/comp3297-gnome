@@ -14,18 +14,6 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 logging.basicConfig(level=logging.DEBUG)
 
 
-# class BackTrackHome(CreateView):
-#     template_name = "home.html"
-#     model = User
-#     fields = ['user', 'password']
-#
-#     def get_success_url(self):
-#         username = self.object.id
-#         pbi = ProductBacklogItem.objects.get(id=pbi_ID)
-#         project = Project.objects.get(id=pbi.productBacklogID.project_id)
-#         return reverse('project', args=(project.id,))
-
-
 class DeletePBI(DeleteView):
     template_name = "productbacklogitem_confirm_delete.html"
     model = ProductBacklogItem
@@ -129,7 +117,6 @@ class ViewProject(TemplateView):
 
         if len(sprint_backlogs) != 0:
             sprint_list_current = sprint_backlogs.filter(status=SprintStatus.CURRENT.value)
-            print(sprint_list_current)
 
             if len(sprint_list_current) > 1:
                 print("A PROJECT SHOULD ONLY HAVE ONE CURRENT SPRINT")
