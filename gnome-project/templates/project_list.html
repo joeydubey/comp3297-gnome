@@ -5,7 +5,13 @@
         <link rel="stylesheet" href="{% static 'css/template.css' %}">
         <title> Project List </title>
         <div class="page-header">
-            <h1 style="text-align: center;"><img width="144" src="{% static 'backtrack.svg' %}" alt="Backtrack"/></h1>
+            <h1 style="text-align: center;"><img width="144" src="{% static 'backtrack.svg' %}" alt="Backtrack"/>
+                logged in as {{ user }}
+                <form action="/">
+                    <button type="submit">Logout</button>
+                </form>
+            </h1>
+
         </div>
         <h2> DSG Projects </h1>
         <style></style>

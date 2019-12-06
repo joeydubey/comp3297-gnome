@@ -5,15 +5,28 @@
         <link rel="stylesheet" href="{% static 'css/template.css' %}">
         <title>Project Details: {{ project }}</title>
         <div class="page-header">
-            <h1 style="text-align: center;"><img width="144" src="{% static 'backtrack.svg' %}" alt="Backtrack"/></h1>
+            <h1 style="text-align: center;"><img width="144" src="{% static 'backtrack.svg' %}" alt="Backtrack"/>
+                logged in as {{ user }}
+                <form action="/">
+                    <button type="submit">Logout</button>
+                </form>
+            </h1>
         </div>
+        <nav class="navbar navbar-default"> 
+            <div class="dropdown-menu" aria-labelledby="NavigationBar"> 
+                <a class="dropdown-item" href="/backtrack/projects">List Projects</a> 
+            </div> 
+        </nav>
+
+
         <h2>Project Details: {{ project }}</h2>
         <style></style>
     </head>
     <body>
+    {% block content %}
+    {% if user.is_authenticated %}
 
     <!--Create New Sprint -->
-
     <form action="{{project.id}}/{{product_backlog.id}}/create-new-sprint">
         <button type="submit"
             class="btn btn-default">
@@ -94,7 +107,6 @@
                 </table>
                 {% else %}
                 <div>
-                    This sprint is empty.
                 </div>
                 {% endif %}
                 {% empty %}
@@ -203,7 +215,6 @@
                 </table>
                 {% else %}
                 <div>
-                    This sprint is empty.
                 </div>
                 {% endif %}
                 {% empty %}
@@ -226,7 +237,7 @@
             </form>
             {% else %}
 
-            Current Sprint Backlog {{ sprint_current.name }} &nbsp;&nbsp;&nbsp;&nbsp; <font size="-1.5"> Total Story Points: {{ sprint_current.sprint_cummulative_effort_hours}}</font>&nbsp;&nbsp;&nbsp;&nbsp; <font size="-1.5"> Total Effort Hours: {{ sprint_current.sprint_actual_effort_hours}}</font>&nbsp;&nbsp;&nbsp;&nbsp; <font size="-1.5"> Total Work Remaining: {{ sprint_current.sprint_work_remaining}}</font>
+            Current Sprint Backlog {{ sprint_current.name }} &nbsp;&nbsp;&nbsp;&nbsp; <font size="-1.5"> Total Story Points: {{ sprint_current.sprint_total_story_points}}</font>&nbsp;&nbsp;&nbsp;&nbsp; <font size="-1.5"> Total Effort Hours: {{ sprint_current.sprint_actual_effort_hours}}</font>&nbsp;&nbsp;&nbsp;&nbsp; <font size="-1.5"> Total Work Remaining: {{ sprint_current.sprint_work_remaining}}</font>
 
             <form action="product-backlog/sprint-backlog/{{sprint_current.id}}">
                 <button type="submit"
@@ -305,7 +316,6 @@
             </table>
             {% else %}
             <div>
-                This sprint is empty.
             </div>
             {% endif %}
             {% endif %}
@@ -410,4 +420,9 @@
     </div>
     {% endif %}
     </body>
+    {%else%}
+        <p>You are not logged in</p>
+        <a href="{% url 'login' %}">login</a>
+    {% endif %}
+    {% endblock %}
 </html>

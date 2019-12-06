@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.urls import reverse
 from django.views.generic.list import ListView
-from backtrack.models import Project, ProductBacklog, SprintBacklog, ProjectStatus, SprintStatus, ProductBacklogItem, Task, TaskStatus, PBIStatus, PBIPriority, User
+from backtrack.models import Project, ProductBacklog, SprintBacklog, ProjectStatus, SprintStatus, ProductBacklogItem, Task, TaskStatus, PBIStatus, PBIPriority
 import logging
 from django.shortcuts import get_object_or_404
 import plotly.offline as opy
@@ -50,8 +50,6 @@ class BackTrackHome(CreateView):
         pbi = ProductBacklogItem.objects.get(id=pbi_ID)
         project = Project.objects.get(id=pbi.productBacklogID.project_id)
         return reverse('project', args=(project.id,))
-    
-    
 
 class DeletePBI(DeleteView):
     template_name = "productbacklogitem_confirm_delete.html"
@@ -156,7 +154,6 @@ class ViewProject(TemplateView):
 
         if len(sprint_backlogs) != 0:
             sprint_list_current = sprint_backlogs.filter(status=SprintStatus.CURRENT.value)
-            print(sprint_list_current)
 
             if len(sprint_list_current) > 1:
                 print("A PROJECT SHOULD ONLY HAVE ONE CURRENT SPRINT")
@@ -183,6 +180,12 @@ class ViewProject(TemplateView):
                 if (pbi.status != PBIStatus.COMPLETE.value):
                     cumulativeCounter += pbi.pointEstimate
                 cumulativePoints.append(cumulativeCounter)
+
+            for s in sprint_list_current:
+                pbiList.filter(sprintBacklogID=s.id).update(status=PBIStatus.IN_PROGRESS.value)
+
+            for s in sprint_list_done:
+                pbiList.filter(sprintBacklogID=s.id).update(status=PBIStatus.COMPLETE.value)
 
             pbiWithCumulative = zip(pbiList, cumulativePoints)
             context['pbi_and_cumulative_points'] = pbiWithCumulative

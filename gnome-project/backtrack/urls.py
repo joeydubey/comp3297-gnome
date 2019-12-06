@@ -1,9 +1,10 @@
-from django.urls import path
 from backtrack import views
+from django.contrib import admin
+from django.urls import path, include
+from django.views.generic.base import TemplateView
 
 
 urlpatterns = [path('projects', views.ViewAllProjects.as_view(), name='projects'),
-               path('', views.BackTrackHome.as_view(), name='homePage'),
                path('projects/<int:project>', views.ViewProject.as_view(), name='project'),
                path('projects/create-new-project', views.CreateNewProjectView.as_view(), name='newProject'),
                path('projects/product-backlog/<int:pbi>/<int:task>', views.ViewTask.as_view(), name='task'),
@@ -17,3 +18,5 @@ urlpatterns = [path('projects', views.ViewAllProjects.as_view(), name='projects'
                path('projects/product-backlog/sprint-backlog/<int:pk>', views.EditSprintbacklog.as_view(), name='editSprintBacklog'),
                path('projects/<int:project>/velocitychart', views.VelocityChart.as_view(), name='velocitychart'),
                ]
+
+
