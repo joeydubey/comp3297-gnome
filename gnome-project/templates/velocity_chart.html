@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/template.css' %}">
+        <title> Velocity Chart </title>
+        <div class="page-header">
+            <h1 style="text-align: center;"><img width="144" src="{% static 'backtrack.svg' %}" alt="Backtrack"/></h1>
+        </div>
+        <style></style>
+    <body>
+            <p> {{ project.name }} Velocity Chart </p>
+            <div style="width:2000;height:200">
+                    {{ graph|safe }}
+                    </div>
+    </body>
+</html>
+
+
+        
+          
