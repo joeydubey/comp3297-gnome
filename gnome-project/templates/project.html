@@ -6,11 +6,12 @@
         <title>Project Details: {{ project }}</title>
         <div class="page-header">
             <h1 style="text-align: center;"><img width="144" src="{% static 'backtrack.svg' %}" alt="Backtrack"/>
-                logged in as {{ user }}
+            </h1>
+            <h2>Logged in as {{ user }}
                 <form action="/">
                     <button type="submit">Logout</button>
                 </form>
-            </h1>
+            </h2>   
         </div>
         <h2>Project Details: {{ project }}</h2>
         <style></style>
