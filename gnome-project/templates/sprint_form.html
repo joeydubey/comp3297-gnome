@@ -41,23 +41,14 @@
             </table>
             {% else %}
             <div>
-                This sprint is empty. Add PBIs from the product backlog to populate the sprint backlog.
+                This sprint is empty. Add PBIs from the Product Backlog to populate the Sprint Backlog.
             </div>
             {% endif %}
             <br>
-            <div>
-                Once populated, save the sprint by clicking on the save button.
-            </div>
         <br>
         <div>
         <p> Product Backlog
-            <!--    <form action="{{project.id}}/{{product_backlog.id}}/create-new-pbi">
-                 <button type="submit"
-                          class="btn btn-default">
-                      Add Product Backlog Item
-                  </button>
-              </form>
-            --></p>
+            </p>
       
             {% if product_backlog.pbiList %}
             <table>
@@ -70,21 +61,7 @@
                   </tr>
                   {% for pbi in product_backlog.pbiList %}
                   <tr>
-                      <td> {{ pbi.name }}
-                          <!--<form action="product-backlog/pbi/{{pbi.id}}">
-                              <button type="submit"
-                                      class="btn btn-default">
-                                  edit
-                              </button>
-                          </form>
-                          <form action="product-backlog/pbi/delete-{{pbi.id}}">
-                              <button type="submit"
-                                      class="btn btn-default">
-                                  delete
-                              </button>
-                          </form>
-                        -->
-                      </td>
+                      <td> {{ pbi.name }}</td>
                       <td> {{ pbi.description }} </td>
                       <td> {{ pbi.pointEstimate }} </td>
                       <td> {{ pbi.status }} </td>

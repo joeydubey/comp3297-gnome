@@ -92,9 +92,18 @@ class SprintBacklog(models.Model):
     def __str__(self):
         return self.name
 
+    def productBacklog(self):
+        return ProductBacklog.objects.get(self.productBacklogID)
 
     def pbiList(self):
         return ProductBacklogItem.objects.filter(sprintBacklogID=self.id).order_by('priority')
+
+    @property
+    def sprint_total_story_points(self):
+        x = 0
+        for PBI in self.pbiList():
+            x += PBI.pointEstimate
+        return x
 
     @property
     def sprint_cummulative_effort_hours(self):
