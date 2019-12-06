@@ -65,7 +65,38 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+   
+    def get_absolute_url(self):
+       return reverse("home",kwargs={"id": self.id})
 
+    @property
+    #returns all completed sprints
+    def all_sprints(self):
+        holder = ProductBacklog.objects.get(project=self.id)
+        return SprintBacklog.objects.filter(productBacklogID=holder.id,status=SprintStatus.COMPLETE.value)
+    
+    #fills lists with all the names of completed sprints 
+    @property
+    def velocity_chart_names(self):
+        holder = []
+        for Sprint in self.all_sprints:
+            holder.append(Sprint.name)
+        return holder
+    #fills list with estimated hours for completed sprints
+    @property
+    def velocity_chart_actual(self):
+        holder = []
+        for Sprint in self.all_sprints:
+            holder.append(Sprint.sprint_actual_effort_hours)
+        return holder
+
+    #fills list with actual hours for completed sprints
+    @property
+    def velocity_chart_estimated(self):
+        holder = []
+        for Sprint in self.all_sprints:
+            holder.append(Sprint.sprint_cummulative_effort_hours)
+        return holder
 
 class ProductBacklog(models.Model):
     name = models.CharField(max_length=200)
@@ -126,7 +157,7 @@ class SprintBacklog(models.Model):
 class ProductBacklogItem(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=500)
-    pointEstimate = models.IntegerField(blank=True, null=True, default=1)
+    pointEstimate = models.IntegerField(choices=[(x,str(x)) for x in {1,2,3,5,8,13,20,40}])
     productBacklogID = models.ForeignKey(ProductBacklog, on_delete=models.CASCADE)
     sprintBacklogID = models.ForeignKey(SprintBacklog, on_delete=models.CASCADE, blank=True, null=True)
     status = models.CharField(max_length=50, default=PBIStatus.NOT_YET_STARTED.value, choices=PBIStatus.choices())

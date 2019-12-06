@@ -16,7 +16,7 @@ urlpatterns = [path('projects', views.ViewAllProjects.as_view(), name='projects'
                path('projects/<int:project>/<int:SprintBacklog>/<int:pbi>/create-new-task', views.CreateNewTaskView.as_view(), name='newTASK'),
                path('projects/<int:project>/<int:productBacklog>/create-new-sprint', views.CreateNewSprintView.as_view(), name='newSprint'),
                path('projects/product-backlog/sprint-backlog/<int:pk>', views.EditSprintbacklog.as_view(), name='editSprintBacklog'),
-
+               path('projects/<int:project>/velocitychart', views.VelocityChart.as_view(), name='velocitychart'),
                ]
 
 

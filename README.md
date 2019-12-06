@@ -1,18 +1,17 @@
 # COMP3297 Software Engineering- GNOME 
 
 # Limitations of final project
-The final project lacks profiles for users where they can select between developer, scrum master, product owner, etc. and instead these types are manage through the user groups via the Django admin site. This configurability is odd and doesn't always work when we run Backtrack. 
+The final project lacks profiles for users where they can select between developer, scrum master, product owner, etc. and instead these types are managed through the user groups via the Django admin site. This configurability is odd and doesn't always work when we run Backtrack. We would hope in the next version to implement user profiles that are more managable by the actual users of Backtrack. 
 
 The UI/UX is lacking what we would expect a final project to look like (however this was expected). 
 
-Burndown chart
-burndown 
-velocity
-transition pbi into a new sprint
-remove pbi from a sprint
-add a pbi to a sprint
+Overall, the usability of adding/editing/selecting tasks/pbis isn't as seamless of a transition as we would have liked or that you would see in a professional project. Not using javascript made the coding simpler, but limited what we were really able to do. There are excess button pushes to complete a function from the user's viewpoint.
 
-## Getting Started
+For the Burndown and Burnup charts, we weren't able to create this exactly as we wanted to because we don't currently track the work done per day or log an increase in actual effort hours per day to display this in a comprehensive chart. An update would be to log the day that a change in actual effort hours was made and use that to populate a chart and a graph.
+
+When creating a new sprint, our goal was to select PBIs from the Product backlog to be added. We also wanted PBIs to to be added/removed from unstarted sprints. This unfortunatly didn't come to fruititon. We could implement a front end button to select PBIs however integrating this feature with the backend proved far more complicated than we expected. Becasue of this, transition a PBI into a new sprint, remove PBI from a sprint and, add a PBI to a sprint are features that didn't make it in release 1. (Some members also stopped replying to messages and didn't complete their share of the work and so we struggled to put the right amount of time into these features in order to successfully complete them).
+
+# Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 

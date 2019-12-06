@@ -13,6 +13,13 @@
                 </form>
             </h2>   
         </div>
+        <nav class="navbar navbar-default"> 
+            <div class="dropdown-menu" aria-labelledby="NavigationBar"> 
+                <a class="dropdown-item" href="/backtrack/projects">List Projects</a> 
+            </div> 
+        </nav>
+
+
         <h2>Project Details: {{ project }}</h2>
         <style></style>
     </head>
@@ -27,6 +34,15 @@
             Create New Sprint
         </button>
     </form>
+
+    <form action="{{project.id}}/velocitychart"> 
+        <button type="submit"
+                class="btn btn-default">
+                Velocity Chart 
+        </button>
+    </form>
+
+                
 
     <!--Completed sprints-->
         <p> Completed Sprint Backlogs
