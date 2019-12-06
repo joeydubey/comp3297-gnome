@@ -1,6 +1,16 @@
-# COMP3297 Software Engineering- GNOME
+# COMP3297 Software Engineering- GNOME 
 
-One Paragraph of project description goes here
+# Limitations of final project
+The final project lacks profiles for users where they can select between developer, scrum master, product owner, etc. and instead these types are manage through the user groups via the Django admin site. This configurability is odd and doesn't always work when we run Backtrack. 
+
+The UI/UX is lacking what we would expect a final project to look like (however this was expected). 
+
+Burndown chart
+burndown 
+velocity
+transition pbi into a new sprint
+remove pbi from a sprint
+add a pbi to a sprint
 
 ## Getting Started
 
@@ -58,34 +68,6 @@ python manage.py makemigrations backtrack
 python manage.py migrate
 ```
 
-
-## Writing tests
-WRITE THEM!!! UNIT TESTS PLEASE!! I WIL BE TEST HOUND
-
-### Running the tests
-
-`python manage.py test` will run all of the tests in the test directory
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
 ## Built With
 
 * [Django](ha put a link here) - The web framework used
@@ -93,7 +75,4 @@ Add additional notes about how to deploy this on a live system
 ## Authors
 
 * **Hannah Grossman** - [Github](https://github.com/hannahg141)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
 
