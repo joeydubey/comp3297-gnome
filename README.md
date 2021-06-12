@@ -74,4 +74,4 @@ python manage.py migrate
 ## Authors
 
 * **Hannah Grossman** - [Github](https://github.com/hannahg141)
-
+* **Joey Pathak-Dubey** - [Github](https://github.com/joeydubey)
